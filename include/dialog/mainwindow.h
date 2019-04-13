@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "dialog/magnetdialog.h"
 #include "dialog/torrentdialog.h"
+#include "dialog/downloadform.h"
 
 namespace Ui {
 class MainWindow;
@@ -26,6 +27,7 @@ private:
     Ui::MainWindow *ui;
 	MagnetDialog *pMagnetDialog;
 	TorrentDialog *pTorrentDialog;
+	DownloadForm *pDownloadForm;
 };
 
 #endif // MAINWINDOW_H

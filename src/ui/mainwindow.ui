@@ -24,7 +24,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>./media/icons/sBittorrent.png</normaloff>./media/icons/sBittorrent.png</iconset>
+    <normaloff>media/icons/sBittorrent.png</normaloff>media/icons/sBittorrent.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QWidget" name="verticalLayoutWidget">
@@ -118,7 +118,7 @@
   <action name="action">
    <property name="icon">
     <iconset>
-     <normaloff>./media/icons/Megnet.png</normaloff>./media/icons/Megnet.png</iconset>
+     <normaloff>media/icons/Megnet.png</normaloff>media/icons/Megnet.png</iconset>
    </property>
    <property name="text">
     <string>添加Magnet</string>
@@ -127,7 +127,7 @@
   <action name="action_Torrent">
    <property name="icon">
     <iconset>
-     <normaloff>./media/icons/addTorrent.png</normaloff>./media/icons/addTorrent.png</iconset>
+     <normaloff>media/icons/addTorrent.png</normaloff>media/icons/addTorrent.png</iconset>
    </property>
    <property name="text">
     <string>添加Torrent</string>
@@ -136,7 +136,7 @@
   <action name="action_2">
    <property name="icon">
     <iconset>
-     <normaloff>./media/icons/start.png</normaloff>./media/icons/start.png</iconset>
+     <normaloff>media/icons/start.png</normaloff>media/icons/start.png</iconset>
    </property>
    <property name="text">
     <string>继续</string>
@@ -145,7 +145,7 @@
   <action name="action_3">
    <property name="icon">
     <iconset>
-     <normaloff>./media/icons/stop.png</normaloff>./media/icons/stop.png</iconset>
+     <normaloff>media/icons/stop.png</normaloff>media/icons/stop.png</iconset>
    </property>
    <property name="text">
     <string>暂停</string>
@@ -154,7 +154,7 @@
   <action name="action_4">
    <property name="icon">
     <iconset>
-     <normaloff>./media/icons/reload.png</normaloff>./media/icons/reload.png</iconset>
+     <normaloff>media/icons/reload.png</normaloff>media/icons/reload.png</iconset>
    </property>
    <property name="text">
     <string>重新开始</string>
@@ -163,7 +163,7 @@
   <action name="action_6">
    <property name="icon">
     <iconset>
-     <normaloff>./media/icons/stop.png</normaloff>./media/icons/stop.png</iconset>
+     <normaloff>media/icons/stop.png</normaloff>media/icons/stop.png</iconset>
    </property>
    <property name="text">
     <string>暂停所有任务</string>
@@ -172,7 +172,7 @@
   <action name="action_7">
    <property name="icon">
     <iconset>
-     <normaloff>./media/icons/start.png</normaloff>./media/icons/start.png</iconset>
+     <normaloff>media/icons/start.png</normaloff>media/icons/start.png</iconset>
    </property>
    <property name="text">
     <string>继续所有任务</string>
@@ -181,7 +181,7 @@
   <action name="action_9">
    <property name="icon">
     <iconset>
-     <normaloff>./media/icons/delete.png</normaloff>./media/icons/delete.png</iconset>
+     <normaloff>media/icons/delete.png</normaloff>media/icons/delete.png</iconset>
    </property>
    <property name="text">
     <string>删除</string>
@@ -190,7 +190,7 @@
   <action name="action_10">
    <property name="icon">
     <iconset>
-     <normaloff>./media/icons/exit.png</normaloff>./media/icons/exit.png</iconset>
+     <normaloff>media/icons/exit.png</normaloff>media/icons/exit.png</iconset>
    </property>
    <property name="text">
     <string>关闭</string>

@@ -7,15 +7,20 @@
 message("You are running qmake on a generated .pro file. This may not work!")
 
 
-HEADERS += ./include/dialog/torrentdialog.h \
+HEADERS += ./include/dialog/magnetdialog.h \
     ./include/dialog/mainwindow.h \
-    ./include/dialog/magnetdialog.h \
-    ./include/test/debug_test.h
-SOURCES += ./src/dialog/torrentdialog.cpp \
-    ./src/dialog/mainwindow.cpp \
-    ./src/dialog/magnetdialog.cpp \
+    ./include/dialog/torrentdialog.h \
+    ./include/test/debug_test.h \
+    ./include/dialog/downloadform.h \
+    ./include/apps/download.h
+SOURCES += ./src/apps/asio.cpp \
     ./src/apps/main.cpp \
-    ./src/apps/asio.cpp
+    ./src/dialog/magnetdialog.cpp \
+    ./src/dialog/mainwindow.cpp \
+    ./src/dialog/torrentdialog.cpp \
+    ./src/dialog/downloadform.cpp \
+    ./src/apps/download.cpp
 FORMS += ./src/ui/mainwindow.ui \
+    ./src/ui/torrentdialog.ui \
     ./src/ui/magnetdialog.ui \
-    ./src/ui/torrentdialog.ui
+    ./src/ui/downloadform.ui

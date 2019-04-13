@@ -75,6 +75,18 @@
     <ClCompile Include="Temp\GeneratedFiles\Release\moc_torrentdialog.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="Temp\GeneratedFiles\Debug\moc_downloadform.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Temp\GeneratedFiles\Release\moc_downloadform.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dialog\downloadform.cpp">
+      <Filter>src\dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="src\apps\download.cpp">
+      <Filter>src\apps</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="include\dialog\magnetdialog.h">
@@ -95,6 +107,12 @@
     <CustomBuild Include="src\ui\magnetdialog.ui">
       <Filter>ui</Filter>
     </CustomBuild>
+    <CustomBuild Include="include\dialog\downloadform.h">
+      <Filter>include\dialog</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ui\downloadform.ui">
+      <Filter>ui</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\test\debug_test.h">
@@ -108,6 +126,12 @@
     </ClInclude>
     <ClInclude Include="Temp\GeneratedFiles\ui_magnetdialog.h">
       <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Temp\GeneratedFiles\ui_downloadform.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\apps\download.h">
+      <Filter>include\apps</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
