@@ -2,6 +2,10 @@
 #define DOWNLOADFORM_H
 
 #include <QWidget>
+#include <QTableWidget>
+#include <QProgressBar>
+
+#include "apps/sess.h"
 
 namespace Ui {
 class DownloadForm;
@@ -15,8 +19,13 @@ public:
     explicit DownloadForm(QWidget *parent = 0);
     ~DownloadForm();
 
+public:
+	void init();
+	void setlist(AllTorrent& list);
 private:
     Ui::DownloadForm *ui;
+	QTableWidget *pTableWidget;
+	QProgressBar *pProgressBar;			//½ø¶ÈÌõ
 };
 
 #endif // DOWNLOADFORM_H

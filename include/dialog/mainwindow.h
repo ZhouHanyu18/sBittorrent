@@ -6,6 +6,10 @@
 #include "dialog/torrentdialog.h"
 #include "dialog/downloadform.h"
 
+#include "test/debug_test.h"
+#include "apps/download.h"
+#include "apps/sess.h"
+#include <qfiledialog.h>
 namespace Ui {
 class MainWindow;
 }
@@ -20,7 +24,7 @@ public:
 
 private slots:
     void on_action_triggered();
-
+	void resizeEvent(QResizeEvent *e);
     void on_action_Torrent_triggered();
 
 private:
@@ -28,6 +32,9 @@ private:
 	MagnetDialog *pMagnetDialog;
 	TorrentDialog *pTorrentDialog;
 	DownloadForm *pDownloadForm;
+	int m_nTimerID;
+public:
+	virtual void timerEvent(QTimerEvent *event);	//定义定时器
 };
 
 #endif // MAINWINDOW_H

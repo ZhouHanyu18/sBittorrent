@@ -13,9 +13,6 @@
     <Filter Include="include\apps">
       <UniqueIdentifier>{de6002be-0c01-4f10-9f3e-5522a085f95f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\dialog">
-      <UniqueIdentifier>{883b3e24-113c-4e77-96cd-2ed85d3b8a80}</UniqueIdentifier>
-    </Filter>
     <Filter Include="include\test">
       <UniqueIdentifier>{005d29aa-41ab-44c9-b1de-03eabc79b8b1}</UniqueIdentifier>
     </Filter>
@@ -39,6 +36,15 @@
       <UniqueIdentifier>{0f039ae3-aa5a-4c47-83e6-1d0f8b404e3b}</UniqueIdentifier>
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="include\dialog">
+      <UniqueIdentifier>{883b3e24-113c-4e77-96cd-2ed85d3b8a80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\tools">
+      <UniqueIdentifier>{6b019809-9839-4ae3-a2a6-dce9b60228c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\tools">
+      <UniqueIdentifier>{bfc3415c-962d-4822-b146-88404e5b3de5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -87,6 +93,12 @@
     <ClCompile Include="src\apps\download.cpp">
       <Filter>src\apps</Filter>
     </ClCompile>
+    <ClCompile Include="src\apps\sess.cpp">
+      <Filter>src\apps</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tools\format.cpp">
+      <Filter>src\tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="include\dialog\magnetdialog.h">
@@ -132,6 +144,12 @@
     </ClInclude>
     <ClInclude Include="include\apps\download.h">
       <Filter>include\apps</Filter>
+    </ClInclude>
+    <ClInclude Include="include\apps\sess.h">
+      <Filter>include\apps</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tools\format.h">
+      <Filter>include\tools</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
