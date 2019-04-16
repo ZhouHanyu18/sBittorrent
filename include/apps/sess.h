@@ -145,7 +145,7 @@ private:
 	handles_t files;
 	std::set<libtorrent::torrent_handle> non_files;
 	libtorrent::session *ses;
-	std::vector<std::string> torrents;
+	//std::vector<std::string> torrents;
 	boost::unordered_set<torrent_status> all_handles;
 	std::vector<torrent_status const*> filtered_handles;
 	libtorrent::error_code ec;

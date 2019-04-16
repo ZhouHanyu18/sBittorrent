@@ -592,17 +592,11 @@ Sess::Sess()
 
 void Sess::addTorrent(std::string str)
 {
-	torrents.push_back(str);	//添加种子
-	// torrents that were not added via the monitor dir
-
-	for (std::vector<std::string>::iterator i = torrents.begin()
-		, end(torrents.end()); i != end; ++i)
-	{
-		// if it's a torrent file, open it as usual
-		add_torrent(*ses, files, non_files, i->c_str()
-			, allocation_mode, save_path, false
-			, torrent_upload_limit, torrent_download_limit);
-	}
+	// if it's a torrent file, open it as usual
+	add_torrent(*ses, files, non_files, str.c_str()
+		, allocation_mode, save_path, false
+		, torrent_upload_limit, torrent_download_limit);
+	
 	this->has_task = true;
 }
 

@@ -48,7 +48,7 @@ void MainWindow::resizeEvent(QResizeEvent *e)
 	}
 }
 
-void MainWindow::on_action_triggered()
+void MainWindow::on_action_1_triggered()
 {
 	pMagnetDialog = new MagnetDialog(this);
 	pMagnetDialog->exec();
@@ -59,7 +59,7 @@ void MainWindow::on_action_triggered()
 	QByteArray temp = qStr.toLocal8Bit();
 	char *cStr = temp.data();
 
-	//if (strncmp(cStr, "magnet:", 7) == 0)
+	if (strncmp(cStr, "magnet:", 7) == 0)
 	{
 		QMessageBox::information(this, "title", QString::fromLocal8Bit(cStr));
 		Sess *p = Sess::getInstance();
@@ -73,7 +73,7 @@ void MainWindow::on_action_Torrent_triggered()
 	QByteArray temp = file_name.toLocal8Bit();
 	std::string str = temp.data();
 	Sess *p = Sess::getInstance();
-	p->addTorrent(str);
+	p->addTorrent(tools::format::AsciiToUtf8(str));
 	/*char *cStr = temp.data();
 	char p[100][100];
 	strcpy(p[0],  "");

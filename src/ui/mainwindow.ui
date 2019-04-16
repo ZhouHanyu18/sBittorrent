@@ -68,7 +68,7 @@
     <property name="title">
      <string>文件</string>
     </property>
-    <addaction name="action"/>
+    <addaction name="action_1"/>
     <addaction name="action_Torrent"/>
     <addaction name="separator"/>
     <addaction name="action_10"/>
@@ -105,7 +105,7 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="action"/>
+   <addaction name="action_1"/>
    <addaction name="action_Torrent"/>
    <addaction name="separator"/>
    <addaction name="action_2"/>
@@ -115,7 +115,7 @@
    <addaction name="action_9"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="action">
+  <action name="action_1">
    <property name="icon">
     <iconset>
      <normaloff>media/icons/Megnet.png</normaloff>media/icons/Megnet.png</iconset>

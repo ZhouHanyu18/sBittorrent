@@ -9,6 +9,8 @@
 #include "test/debug_test.h"
 #include "apps/download.h"
 #include "apps/sess.h"
+#include "tools/format.h"
+
 #include <qfiledialog.h>
 namespace Ui {
 class MainWindow;
@@ -23,7 +25,7 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_action_triggered();
+    void on_action_1_triggered();
 	void resizeEvent(QResizeEvent *e);
     void on_action_Torrent_triggered();
 
