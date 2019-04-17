@@ -110,91 +110,6 @@ std::string add_suffix(float val, char const* suffix = 0)
 	return ret;
 }
 
-void Sess::init()
-{
-	using namespace libtorrent;
-	print_trackers = false;
-	print_peers = false;
-	print_log = false;
-	print_downloads = true;
-	print_piece_bar = false;
-	print_file_progress = false;
-	show_pad_files = true;
-	show_dht_status = true;
-	sequential_download = false;
-	print_utp_stats = true;
-
-	print_ip = true;
-	print_as = true;
-	print_timers = true;
-	print_block = true;
-	print_peer_rate = true;
-	print_fails = true;
-	print_send_bufs = true;
-
-	num_outstanding_resume_data = 0;
-	torrent_filter = torrents_not_paused;
-
-	g_log_file = 0;
-
-	active_torrent = 0;
-
-	listen_port = 6881;
-	allocation_mode = libtorrent::storage_mode_sparse;
-	save_path = std::string(".");
-	torrent_upload_limit = 0;
-	torrent_download_limit = 0;
-	monitor_dir = "";
-	bind_to_interface = "";
-	outgoing_interface = "";
-	poll_interval = 5;
-	max_connections_per_torrent = 50;
-	seed_mode = false;
-
-	share_mode = false;
-	disable_storage = false;
-
-	ses = new session(fingerprint("LT", LIBTORRENT_VERSION_MAJOR, LIBTORRENT_VERSION_MINOR, 0, 0)
-		, session::add_default_plugins
-		, alert::all_categories
-		& ~(alert::dht_notification
-		+ alert::progress_notification
-		+ alert::debug_notification
-		+ alert::stats_notification));
-
-	create_directory(combine_path(save_path, ".resume"), ec);	//保存路径
-
-	ses->start_lsd();			//启动与停止本地发现服务
-	ses->start_upnp();			//来启动与停止 UpnP 服务
-	ses->start_natpmp();			//来打开或者关闭 NAT-PMP 服务
-
-
-	ses->set_proxy(ps);				//设置代理服务器
-
-	ses->listen_on(std::make_pair(6881, 6881)		//监听端口的范围
-		, ec, bind_to_interface.c_str());
-
-
-	settings.use_dht_as_fallback = false;
-
-	ses->add_dht_router(std::make_pair(
-		std::string("router.bittorrent.com"), 6881));
-	ses->add_dht_router(std::make_pair(
-		std::string("router.utorrent.com"), 6881));
-	ses->add_dht_router(std::make_pair(
-		std::string("router.bitcomet.com"), 6881));
-
-	ses->start_dht();
-
-	settings.user_agent = "sBittorrent/" LIBTORRENT_VERSION;
-	settings.choking_algorithm = session_settings::auto_expand_choker;
-	settings.disk_cache_algorithm = session_settings::avoid_readback;
-
-	settings.volatile_read_cache = false;
-	ses->set_settings(settings);				//应用配置
-
-}
-
 bool compare_torrent(torrent_status const* lhs, torrent_status const* rhs)
 {
 	if (lhs->queue_position != -1 && rhs->queue_position != -1)
@@ -311,6 +226,39 @@ bool Sess::handle_alert(libtorrent::session& ses, libtorrent::alert* a
 	, bool& need_resort)
 {
 	using namespace libtorrent;
+
+#ifdef TORRENT_USE_OPENSSL
+	if (torrent_need_cert_alert* p = alert_cast<torrent_need_cert_alert>(a))
+	{
+		torrent_handle h = p->handle;
+		file_status st;
+		std::string cert = combine_path("certificates", to_hex(h.info_hash().to_string())) + ".pem";
+		std::string priv = combine_path("certificates", to_hex(h.info_hash().to_string())) + "_key.pem";
+		stat_file(cert, &st, ec);
+		if (ec)
+		{
+			char msg[256];
+			snprintf(msg, sizeof(msg), "ERROR. could not load certificate %s: %s\n", cert.c_str(), ec.message().c_str());
+			if (g_log_file) fprintf(g_log_file, "[%s] %s\n", time_now_string(), msg);
+			return true;
+		}
+		stat_file(priv, &st, ec);
+		if (ec)
+		{
+			char msg[256];
+			snprintf(msg, sizeof(msg), "ERROR. could not load private key %s: %s\n", priv.c_str(), ec.message().c_str());
+			if (g_log_file) fprintf(g_log_file, "[%s] %s\n", time_now_string(), msg);
+			return true;
+		}
+
+		char msg[256];
+		snprintf(msg, sizeof(msg), "loaded certificate %s and key %s\n", cert.c_str(), priv.c_str());
+		if (g_log_file) fprintf(g_log_file, "[%s] %s\n", time_now_string(), msg);
+
+		h.set_ssl_certificate(cert, priv, "certificates/dhparams.pem", "1234");
+		h.resume();
+	}
+#endif
 
 	boost::intrusive_ptr<torrent_info> ti;
 
@@ -462,6 +410,123 @@ bool Sess::handle_alert(libtorrent::session& ses, libtorrent::alert* a
 	return false;
 }
 
+void Sess::init()
+{
+	using namespace libtorrent;
+	print_trackers = false;
+	print_peers = false;
+	print_log = false;
+	print_downloads = true;
+	print_piece_bar = false;
+	print_file_progress = false;
+	show_pad_files = true;
+	show_dht_status = true;
+	sequential_download = false;
+	print_utp_stats = true;
+
+	print_ip = true;
+	print_as = true;
+	print_timers = true;
+	print_block = true;
+	print_peer_rate = true;
+	print_fails = true;
+	print_send_bufs = true;
+
+	num_outstanding_resume_data = 0;
+	torrent_filter = torrents_not_paused;
+
+	g_log_file = 0;
+
+	active_torrent = 0;
+
+	listen_port = 6881;
+	allocation_mode = libtorrent::storage_mode_sparse;
+	save_path = std::string(".");
+	torrent_upload_limit = 0;
+	torrent_download_limit = 0;
+	monitor_dir = "";
+	bind_to_interface = "";
+	outgoing_interface = "";
+	poll_interval = 5;
+	max_connections_per_torrent = 50;
+	seed_mode = false;
+
+	share_mode = false;
+	disable_storage = false;
+	start_dht = true;
+	start_upnp = true;
+	start_lsd = true;
+	min_mod = false;
+	high_mod = true;
+
+	ses = new session(fingerprint("LT", LIBTORRENT_VERSION_MAJOR, LIBTORRENT_VERSION_MINOR, 0, 0)
+		, session::add_default_plugins
+		, alert::all_categories
+		& ~(alert::dht_notification
+		+ alert::progress_notification
+		+ alert::debug_notification
+		+ alert::stats_notification));
+
+	std::vector<char> in;
+	if (load_file(".ses_state", in, ec) == 0)
+	{
+		lazy_entry e;
+		if (lazy_bdecode(&in[0], &in[0] + in.size(), e, ec) == 0)
+			ses->load_state(e);
+	}
+
+#ifndef TORRENT_DISABLE_GEO_IP
+	ses->load_asnum_db("GeoIPASNum.dat");
+	ses->load_country_db("GeoIP.dat");
+#endif
+
+	create_directory(combine_path(save_path, ".resume"), ec);	//保存路径
+
+	if (start_lsd)
+		ses->start_lsd();			//启动与停止本地发现服务
+
+	if (start_upnp)
+	{
+		ses->start_upnp();			//来启动与停止 UpnP 服务
+		ses->start_natpmp();			//来打开或者关闭 NAT-PMP 服务
+	}
+
+	if (min_mod)
+		settings = min_memory_usage();
+	if (high_mod)
+		settings = high_performance_seed();
+
+	ses->set_proxy(ps);				//设置代理服务器
+
+	ses->listen_on(std::make_pair(6881, 6881)		//监听端口的范围
+		, ec, bind_to_interface.c_str());
+
+#ifndef TORRENT_DISABLE_DHT
+	if (start_dht)
+	{
+		settings.use_dht_as_fallback = false;
+
+		ses->add_dht_router(std::make_pair(
+			std::string("router.bittorrent.com"), 6881));
+		ses->add_dht_router(std::make_pair(
+			std::string("router.utorrent.com"), 6881));
+		ses->add_dht_router(std::make_pair(
+			std::string("router.bitcomet.com"), 6881));
+
+		ses->start_dht();
+	}
+#endif
+	
+
+	settings.user_agent = "sBittorrent/" LIBTORRENT_VERSION;
+	settings.choking_algorithm = session_settings::auto_expand_choker;
+	settings.disk_cache_algorithm = session_settings::avoid_readback;
+
+	settings.volatile_read_cache = false;
+	ses->set_settings(settings);				//应用配置
+
+}
+
 AllTorrent& Sess::getItem()
 {
 	using namespace libtorrent;
@@ -563,24 +628,6 @@ AllTorrent& Sess::getItem()
 
 void Sess::getStatu()
 {
-	while (1)
-	{
-		//getItem();
-		/*Sleep(1000);
-		libtorrent::session_status sess_stat = ses->status();
-		std::string out = "";
-		char str[500];
-		snprintf(str, sizeof(str), "down: %s  (%s) up: %s  (%s) "
-			, add_suffix(sess_stat.download_rate, "/s").c_str()
-			, add_suffix(sess_stat.total_download).c_str()
-			, add_suffix(sess_stat.upload_rate, "/s").c_str()
-			, add_suffix(sess_stat.total_upload).c_str());
-		out += str;
-
-		out += "\n***********************************************************\n";
-
-		puts(out.c_str());*/
-	}
 }
 
 Sess::Sess()
@@ -602,7 +649,40 @@ void Sess::addTorrent(std::string str)
 
 void Sess::addMagnet(std::string str)
 {
-	this->has_task = true;
+	using namespace libtorrent;
+
+	if (std::strstr(str.c_str(), "http://") == str.c_str()
+		|| std::strstr(str.c_str(), "https://") == str.c_str()
+		|| std::strstr(str.c_str(), "magnet:") == str.c_str())
+	{
+		add_torrent_params p;
+		if (seed_mode) p.flags |= add_torrent_params::flag_seed_mode;
+		if (disable_storage) p.storage = disabled_storage_constructor;
+		if (share_mode) p.flags |= add_torrent_params::flag_share_mode;
+		p.save_path = save_path;
+		p.storage_mode = (storage_mode_t)allocation_mode;
+		p.url = str;
+
+		std::vector<char> buf;
+		if (std::strstr(str.c_str(), "magnet:") == str.c_str())
+		{
+			add_torrent_params tmp;
+			ec.clear();
+			parse_magnet_uri(str, tmp, ec);
+
+			if (ec) printf("error magnet");
+
+			std::string filename = combine_path(save_path, combine_path(".resume"
+				, to_hex(tmp.info_hash.to_string()) + ".resume"));
+
+			if (load_file(filename.c_str(), buf, ec) == 0)
+				p.resume_data = &buf;
+		}
+
+		printf("adding URL: %s\n", str.c_str());
+		ses->async_add_torrent(p);
+		this->has_task = true;
+	}
 }
 
 Sess::~Sess()

@@ -37,6 +37,7 @@ private:
 	int m_nTimerID;
 public:
 	virtual void timerEvent(QTimerEvent *event);	//定义定时器
+	void setThread();
 };
 
 #endif // MAINWINDOW_H

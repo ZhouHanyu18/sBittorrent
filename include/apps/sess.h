@@ -127,7 +127,11 @@ private:
 
 	bool share_mode;
 	bool disable_storage;
-
+	bool start_dht ;
+	bool start_upnp ;
+	bool start_lsd ;
+	bool min_mod;
+	bool high_mod;
 	// if non-empty, a peer that will be added to all torrents
 	std::string peer;
 
