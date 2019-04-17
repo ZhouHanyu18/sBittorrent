@@ -7,22 +7,29 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
 	pDownloadForm = new DownloadForm(this);
 	pDownloadForm->move(0, 50);
 	pDownloadForm->show();
 	//m_nTimerID = this->startTimer(100);
+
+	qRegisterMetaType<AllTorrent>("AllTorrent&");
+	connect(this, &MainWindow::showList, pDownloadForm, &DownloadForm::setList);
 	boost::thread th(&MainWindow::setThread, this);
 	th.detach();
 }
 
 void MainWindow::setThread()
 {
-	Sess *p = Sess::getInstance();
-	if (p->has_task)
+	while(true)
 	{
-		AllTorrent& items = p->getItem();
-		pDownloadForm->setlist(items);
+		Sess *p = Sess::getInstance();
+		if (p->has_task)
+		{
+			Sleep(1000);
+			AllTorrent items = p->getItem();
+			emit showList(items);
+			//pDownloadForm->setlist(items);
+		}
 	}
 }
 

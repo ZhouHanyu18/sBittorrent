@@ -12,6 +12,8 @@
 #include "tools/format.h"
 
 #include <qfiledialog.h>
+#include <QMetaType> 
+
 namespace Ui {
 class MainWindow;
 }
@@ -38,6 +40,8 @@ private:
 public:
 	virtual void timerEvent(QTimerEvent *event);	//定义定时器
 	void setThread();
+signals:
+	void showList(AllTorrent& items);
 };
 
 #endif // MAINWINDOW_H

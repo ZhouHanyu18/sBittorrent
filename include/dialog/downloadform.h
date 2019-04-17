@@ -21,11 +21,12 @@ public:
 
 public:
 	void init();
-	void setlist(AllTorrent& list);
 private:
     Ui::DownloadForm *ui;
 	QTableWidget *pTableWidget;
 	QProgressBar *pProgressBar;			//½ø¶ÈÌõ
+public slots:
+	void setList(AllTorrent& list);
 };
 
 #endif // DOWNLOADFORM_H

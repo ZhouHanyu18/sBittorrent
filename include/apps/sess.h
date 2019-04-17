@@ -51,8 +51,9 @@ struct Attribute
 	std::string download;
 	std::string upload_rate;
 	std::string upload;
-	std::string time_download;
-	std::string time_upload;
+	std::string time_download;	//已下载
+	std::string time_upload;	//已上传
+	std::string size;
 	float per;
 	int peers;
 	int seeds;

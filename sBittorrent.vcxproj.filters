@@ -125,31 +125,29 @@
     <CustomBuild Include="src\ui\downloadform.ui">
       <Filter>ui</Filter>
     </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\test\debug_test.h">
+    <CustomBuild Include="include\apps\download.h">
+      <Filter>include\apps</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\apps\sess.h">
+      <Filter>include\apps</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\test\debug_test.h">
       <Filter>include\test</Filter>
-    </ClInclude>
-    <ClInclude Include="Temp\GeneratedFiles\ui_mainwindow.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Temp\GeneratedFiles\ui_torrentdialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Temp\GeneratedFiles\ui_magnetdialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Temp\GeneratedFiles\ui_downloadform.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\apps\download.h">
-      <Filter>include\apps</Filter>
-    </ClInclude>
-    <ClInclude Include="include\apps\sess.h">
-      <Filter>include\apps</Filter>
-    </ClInclude>
-    <ClInclude Include="include\tools\format.h">
+    </CustomBuild>
+    <CustomBuild Include="include\tools\format.h">
       <Filter>include\tools</Filter>
-    </ClInclude>
+    </CustomBuild>
+    <CustomBuild Include="Temp\GeneratedFiles\ui_downloadform.h">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Temp\GeneratedFiles\ui_magnetdialog.h">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Temp\GeneratedFiles\ui_mainwindow.h">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Temp\GeneratedFiles\ui_torrentdialog.h">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
   </ItemGroup>
 </Project>
