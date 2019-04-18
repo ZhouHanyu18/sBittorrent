@@ -36,39 +36,12 @@
 
 
 #include "tools/format.h"
+#include "apps/information.h"
 
 using boost::bind;
 using libtorrent::torrent_status;
 
 typedef std::multimap<std::string, libtorrent::torrent_handle> handles_t;
-
-struct Attribute
-{
-	int queue_pos;
-	std::string status;
-	std::string name;
-	std::string download_rate;
-	std::string download;
-	std::string upload_rate;
-	std::string upload;
-	std::string time_download;	//已下载
-	std::string time_upload;	//已上传
-	std::string size;
-	float per;
-	int peers;
-	int seeds;
-};
-
-struct AllTorrent
-{
-	int size = 0;
-	std::vector <Attribute> item;
-	std::string total_download_rate;
-	std::string total_download;
-	std::string total_upload_rate;
-	std::string total_upload;
-	int dht_Node;
-};
 
 class Sess
 {

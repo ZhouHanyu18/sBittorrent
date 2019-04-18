@@ -7,20 +7,28 @@
 message("You are running qmake on a generated .pro file. This may not work!")
 
 
-HEADERS += ./include/dialog/magnetdialog.h \
-    ./include/dialog/mainwindow.h \
-    ./include/dialog/torrentdialog.h \
+HEADERS += ./include/apps/download.h \
+    ./include/apps/sess.h \
     ./include/test/debug_test.h \
     ./include/dialog/downloadform.h \
-    ./include/apps/download.h
+    ./include/dialog/magnetdialog.h \
+    ./include/dialog/mainwindow.h \
+    ./include/dialog/torrentdialog.h \
+    ./include/tools/format.h \
+    ./include/dialog/statusform.h \
+    ./include/apps/information.h
 SOURCES += ./src/apps/asio.cpp \
+    ./src/apps/download.cpp \
     ./src/apps/main.cpp \
+    ./src/apps/sess.cpp \
+    ./src/dialog/downloadform.cpp \
     ./src/dialog/magnetdialog.cpp \
     ./src/dialog/mainwindow.cpp \
     ./src/dialog/torrentdialog.cpp \
-    ./src/dialog/downloadform.cpp \
-    ./src/apps/download.cpp
+    ./src/tools/format.cpp \
+    ./src/dialog/statusform.cpp
 FORMS += ./src/ui/mainwindow.ui \
     ./src/ui/torrentdialog.ui \
     ./src/ui/magnetdialog.ui \
-    ./src/ui/downloadform.ui
+    ./src/ui/downloadform.ui \
+    ./src/ui/statusform.ui

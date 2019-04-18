@@ -5,10 +5,11 @@
 #include "dialog/magnetdialog.h"
 #include "dialog/torrentdialog.h"
 #include "dialog/downloadform.h"
+#include "dialog/statusform.h"
 
 #include "test/debug_test.h"
 #include "apps/download.h"
-#include "apps/sess.h"
+#include "apps/information.h"
 #include "tools/format.h"
 
 #include <qfiledialog.h>
@@ -27,21 +28,35 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_action_1_triggered();
+	void on_addMagnet_triggered();
 	void resizeEvent(QResizeEvent *e);
-    void on_action_Torrent_triggered();
+	void on_addTorrent_triggered();
 
 private:
     Ui::MainWindow *ui;
 	MagnetDialog *pMagnetDialog;
 	TorrentDialog *pTorrentDialog;
 	DownloadForm *pDownloadForm;
+	StatusForm *pStatusForm;
 	int m_nTimerID;
 public:
-	virtual void timerEvent(QTimerEvent *event);	//定义定时器
+	//virtual void timerEvent(QTimerEvent *event);	//定义定时器
 	void setThread();
 signals:
-	void showList(AllTorrent& items);
+	void thSignal(AllTorrent& items);
+private slots:
+	void onThSignal(AllTorrent& items);
+    void on_continue_2_triggered();
+    void on_stop_triggered();
+    void on_restart_triggered();
+    void on_allStop_triggered();
+    void on_allContinue_triggered();
+    void on_delete_2_triggered();
+    void on_close_triggered();
+    void on_setting_triggered();
+    void on_about_triggered();
+    void on_update_triggered();
+    void on_search_triggered();
 };
 
 #endif // MAINWINDOW_H

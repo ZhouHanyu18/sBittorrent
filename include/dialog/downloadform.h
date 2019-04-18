@@ -25,7 +25,7 @@ private:
     Ui::DownloadForm *ui;
 	QTableWidget *pTableWidget;
 	QProgressBar *pProgressBar;			//½ø¶ÈÌõ
-public slots:
+public:
 	void setList(AllTorrent& list);
 };
 

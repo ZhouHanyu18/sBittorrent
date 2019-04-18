@@ -12,8 +12,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>20</width>
-    <height>20</height>
+    <width>200</width>
+    <height>100</height>
    </size>
   </property>
   <property name="font">
@@ -68,26 +68,42 @@
     <property name="title">
      <string>文件</string>
     </property>
-    <addaction name="action_1"/>
-    <addaction name="action_Torrent"/>
+    <addaction name="addMagnet"/>
+    <addaction name="addTorrent"/>
     <addaction name="separator"/>
-    <addaction name="action_10"/>
+    <addaction name="close"/>
    </widget>
    <widget class="QMenu" name="menu_2">
     <property name="title">
      <string>编辑</string>
     </property>
-    <addaction name="action_2"/>
-    <addaction name="action_3"/>
-    <addaction name="action_4"/>
+    <addaction name="continue_2"/>
+    <addaction name="stop"/>
+    <addaction name="restart"/>
     <addaction name="separator"/>
-    <addaction name="action_6"/>
-    <addaction name="action_7"/>
+    <addaction name="allStop"/>
+    <addaction name="allContinue"/>
     <addaction name="separator"/>
-    <addaction name="action_9"/>
+    <addaction name="delete_2"/>
+   </widget>
+   <widget class="QMenu" name="menu_3">
+    <property name="title">
+     <string>工具</string>
+    </property>
+    <addaction name="search"/>
+    <addaction name="setting"/>
+   </widget>
+   <widget class="QMenu" name="menu_4">
+    <property name="title">
+     <string>帮助</string>
+    </property>
+    <addaction name="about"/>
+    <addaction name="update"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menu_2"/>
+   <addaction name="menu_3"/>
+   <addaction name="menu_4"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <property name="movable">
@@ -105,17 +121,18 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="action_1"/>
-   <addaction name="action_Torrent"/>
+   <addaction name="addMagnet"/>
+   <addaction name="addTorrent"/>
    <addaction name="separator"/>
-   <addaction name="action_2"/>
-   <addaction name="action_3"/>
-   <addaction name="action_4"/>
+   <addaction name="continue_2"/>
+   <addaction name="stop"/>
+   <addaction name="restart"/>
    <addaction name="separator"/>
-   <addaction name="action_9"/>
+   <addaction name="delete_2"/>
+   <addaction name="search"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="action_1">
+  <action name="addMagnet">
    <property name="icon">
     <iconset>
      <normaloff>media/icons/Megnet.png</normaloff>media/icons/Megnet.png</iconset>
@@ -124,7 +141,7 @@
     <string>添加Magnet</string>
    </property>
   </action>
-  <action name="action_Torrent">
+  <action name="addTorrent">
    <property name="icon">
     <iconset>
      <normaloff>media/icons/addTorrent.png</normaloff>media/icons/addTorrent.png</iconset>
@@ -133,7 +150,7 @@
     <string>添加Torrent</string>
    </property>
   </action>
-  <action name="action_2">
+  <action name="continue_2">
    <property name="icon">
     <iconset>
      <normaloff>media/icons/start.png</normaloff>media/icons/start.png</iconset>
@@ -142,7 +159,7 @@
     <string>继续</string>
    </property>
   </action>
-  <action name="action_3">
+  <action name="stop">
    <property name="icon">
     <iconset>
      <normaloff>media/icons/stop.png</normaloff>media/icons/stop.png</iconset>
@@ -151,7 +168,7 @@
     <string>暂停</string>
    </property>
   </action>
-  <action name="action_4">
+  <action name="restart">
    <property name="icon">
     <iconset>
      <normaloff>media/icons/reload.png</normaloff>media/icons/reload.png</iconset>
@@ -160,7 +177,7 @@
     <string>重新开始</string>
    </property>
   </action>
-  <action name="action_6">
+  <action name="allStop">
    <property name="icon">
     <iconset>
      <normaloff>media/icons/stop.png</normaloff>media/icons/stop.png</iconset>
@@ -169,7 +186,7 @@
     <string>暂停所有任务</string>
    </property>
   </action>
-  <action name="action_7">
+  <action name="allContinue">
    <property name="icon">
     <iconset>
      <normaloff>media/icons/start.png</normaloff>media/icons/start.png</iconset>
@@ -178,7 +195,7 @@
     <string>继续所有任务</string>
    </property>
   </action>
-  <action name="action_9">
+  <action name="delete_2">
    <property name="icon">
     <iconset>
      <normaloff>media/icons/delete.png</normaloff>media/icons/delete.png</iconset>
@@ -187,13 +204,44 @@
     <string>删除</string>
    </property>
   </action>
-  <action name="action_10">
+  <action name="close">
    <property name="icon">
     <iconset>
      <normaloff>media/icons/exit.png</normaloff>media/icons/exit.png</iconset>
    </property>
    <property name="text">
     <string>关闭</string>
+   </property>
+  </action>
+  <action name="setting">
+   <property name="icon">
+    <iconset>
+     <normaloff>media/icons/setting.png</normaloff>media/icons/setting.png</iconset>
+   </property>
+   <property name="text">
+    <string>选项</string>
+   </property>
+  </action>
+  <action name="about">
+   <property name="text">
+    <string>关于</string>
+   </property>
+  </action>
+  <action name="update">
+   <property name="text">
+    <string>在线升级</string>
+   </property>
+  </action>
+  <action name="search">
+   <property name="icon">
+    <iconset>
+     <normaloff>media/icons/search.png</normaloff>media/icons/search.png</iconset>
+   </property>
+   <property name="text">
+    <string>搜索</string>
+   </property>
+   <property name="font">
+    <font/>
    </property>
   </action>
  </widget>

@@ -12,9 +12,9 @@ INCLUDEPATH += . \
     ./debug \
     $(QTDIR)/mkspecs/win32-msvc2013 \
     ./GeneratedFiles/debug \
-    ./Temp/GeneratedFiles
+    ./Temp/GeneratedFiles \
+    ./include
 LIBS += -lshell32 \
-    -lC:/qt/qt5.5.1/5.5/msvc2013_64/lib/Qt5Cored \
     -llibeay64 \
     -lssleay64 \
     -llibtorrent_d
@@ -24,3 +24,4 @@ OBJECTS_DIR += debug
 UI_DIR += ./Temp/GeneratedFiles
 RCC_DIR += ./Temp/GeneratedFiles
 include(sBittorrent.pri)
+include(lib/dependence.pri)

@@ -12,8 +12,12 @@ MainWindow::MainWindow(QWidget *parent) :
 	pDownloadForm->show();
 	//m_nTimerID = this->startTimer(100);
 
+	pStatusForm = new StatusForm(this);
+	pStatusForm->move(0, 370);
+	pStatusForm->show();
+
 	qRegisterMetaType<AllTorrent>("AllTorrent&");
-	connect(this, &MainWindow::showList, pDownloadForm, &DownloadForm::setList);
+	connect(this, &MainWindow::thSignal, this, &MainWindow::onThSignal);
 	boost::thread th(&MainWindow::setThread, this);
 	th.detach();
 }
@@ -27,21 +31,27 @@ void MainWindow::setThread()
 		{
 			Sleep(1000);
 			AllTorrent items = p->getItem();
-			emit showList(items);
+			emit thSignal(items);
 			//pDownloadForm->setlist(items);
 		}
 	}
 }
 
-void MainWindow::timerEvent(QTimerEvent *event)
+void MainWindow::onThSignal(AllTorrent& items)
 {
-	if (event->timerId() == m_nTimerID){
-	}
+	pDownloadForm->setList(items);
+	pStatusForm->setStatus(items);
 }
+
+//void MainWindow::timerEvent(QTimerEvent *event)
+//{
+//	if (event->timerId() == m_nTimerID){
+//	}
+//}
 
 MainWindow::~MainWindow()
 {
-	killTimer(m_nTimerID);
+	//killTimer(m_nTimerID);
     delete ui;
 }
 
@@ -53,12 +63,18 @@ void MainWindow::resizeEvent(QResizeEvent *e)
 
 	if (pDownloadForm != NULL)
 	{
-		pDownloadForm->resize(realWidth, realHeight - 100);
+		pDownloadForm->resize(realWidth, realHeight-80);
 		pDownloadForm->init();
+	}
+
+	if (pStatusForm != NULL)
+	{
+		pStatusForm->resize(realWidth, 30);
+		pStatusForm->move(0, realHeight-30);
 	}
 }
 
-void MainWindow::on_action_1_triggered()
+void MainWindow::on_addMagnet_triggered()
 {
 	pMagnetDialog = new MagnetDialog(this);
 	pMagnetDialog->exec();
@@ -74,12 +90,12 @@ void MainWindow::on_action_1_triggered()
 	}
 	else
 	{
-		QMessageBox::information(this, "Error", QString::fromLocal8Bit("链接不合法"));
+		QMessageBox::information(this, "Error", QString::fromLocal8Bit("请输入正确链接"));
 	}
 	
 }
 
-void MainWindow::on_action_Torrent_triggered()
+void MainWindow::on_addTorrent_triggered()
 {
 	QString file_name = QFileDialog::getOpenFileName(NULL, QString::fromLocal8Bit("选择torrent文件"), ".", "*.torrent");
 	if (file_name.length() > 0)
@@ -90,4 +106,59 @@ void MainWindow::on_action_Torrent_triggered()
 		p->addTorrent(tools::format::AsciiToUtf8(str));
 	}
 	
+}
+
+void MainWindow::on_continue_2_triggered()
+{
+
+}
+
+void MainWindow::on_stop_triggered()
+{
+
+}
+
+void MainWindow::on_restart_triggered()
+{
+
+}
+
+void MainWindow::on_allStop_triggered()
+{
+
+}
+
+void MainWindow::on_allContinue_triggered()
+{
+
+}
+
+void MainWindow::on_delete_2_triggered()
+{
+
+}
+
+void MainWindow::on_close_triggered()
+{
+
+}
+
+void MainWindow::on_setting_triggered()
+{
+
+}
+
+void MainWindow::on_about_triggered()
+{
+
+}
+
+void MainWindow::on_update_triggered()
+{
+
+}
+
+void MainWindow::on_search_triggered()
+{
+
 }

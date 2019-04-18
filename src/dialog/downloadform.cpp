@@ -29,10 +29,10 @@ void DownloadForm::init()
 	ui->tableWidget->setColumnCount(6);
 	ui->tableWidget->setColumnWidth(0, width * 0.06);
 	ui->tableWidget->setColumnWidth(1, width * 0.25);
-	ui->tableWidget->setColumnWidth(2, width * 0.3);
+	ui->tableWidget->setColumnWidth(2, width * 0.28);
 	ui->tableWidget->setColumnWidth(3, width * 0.13);
 	ui->tableWidget->setColumnWidth(4, width * 0.13);
-	ui->tableWidget->setColumnWidth(5, width * 0.13);
+	//ui->tableWidget->setColumnWidth(5, width * 0.13);
 	ui->tableWidget->verticalHeader()->setDefaultSectionSize(18);
 
 	QStringList headText;
@@ -52,7 +52,7 @@ void DownloadForm::init()
 	ui->tableWidget->verticalHeader()->setVisible(false);
 	ui->tableWidget->horizontalHeader()->setStretchLastSection(true);
 
-	//设置行高
+	//设置行数
 	ui->tableWidget->setRowCount(300);
 	
 }

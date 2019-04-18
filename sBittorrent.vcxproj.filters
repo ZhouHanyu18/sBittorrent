@@ -99,6 +99,15 @@
     <ClCompile Include="src\tools\format.cpp">
       <Filter>src\tools</Filter>
     </ClCompile>
+    <ClCompile Include="Temp\GeneratedFiles\Debug\moc_statusform.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Temp\GeneratedFiles\Release\moc_statusform.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dialog\statusform.cpp">
+      <Filter>src\dialog</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="include\dialog\magnetdialog.h">
@@ -148,6 +157,18 @@
     </CustomBuild>
     <CustomBuild Include="Temp\GeneratedFiles\ui_torrentdialog.h">
       <Filter>Generated Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\dialog\statusform.h">
+      <Filter>include\dialog</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ui\statusform.ui">
+      <Filter>ui</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Temp\GeneratedFiles\ui_statusform.h">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\apps\information.h">
+      <Filter>include\apps</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

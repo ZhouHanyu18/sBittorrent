@@ -593,7 +593,8 @@ AllTorrent& Sess::getItem()
 		torrent_status const& s = **i;
 		Attribute attr;
 		attr.queue_pos = s.queue_position;
-		attr.name = tools::format::Utf8ToAscii(s.name);
+		if (s.name != "")
+			attr.name = tools::format::Utf8ToAscii(s.name);
 		attr.status = state_str[s.state];
 		attr.download_rate = add_suffix(s.download_rate, "/s");
 		attr.download = add_suffix(s.total_download);
@@ -604,7 +605,9 @@ AllTorrent& Sess::getItem()
 		attr.peers = s.num_peers;
 		attr.seeds = s.num_seeds;
 
-		attr.size = add_suffix(s.handle.torrent_file()->total_size());
+		auto pfile = s.handle.torrent_file();
+		if (pfile)
+			attr.size = add_suffix(pfile->total_size());
 
 		items.item.push_back(attr);
 		++items.size;
