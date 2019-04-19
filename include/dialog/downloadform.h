@@ -34,11 +34,13 @@ private:
 	QAction *stopAction;
 	QAction *playAction;
 	QAction *restartAction;
+	QAction *forceStartAction;
 	QAction *deleteAction;
 	QAction *copyAction;
 	QAction *renameAction;
 	QAction *openAction;
-	QModelIndexList selectedindexes;
+	//QModelIndexList selectedindexes;
+	std::vector<int> rows;
 public:
 	void setList(AllTorrent& list);
 	void getSelection();
@@ -49,6 +51,7 @@ public slots:
 	void on_tableWidget_customContextMenuRequested(QPoint pos);		//”“º¸œÏ”¶
 	void click_continueAction();
 	void click_stopAction();
+	void click_forceStartAction();
 	void click_playAction();
 	void click_restartAction();
 	void click_deleteAction();

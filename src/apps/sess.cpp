@@ -1,19 +1,5 @@
 ﻿#include "apps/sess.h"
 
-enum {
-	torrents_all,
-	torrents_downloading,
-	torrents_not_paused,
-	torrents_seeding,
-	torrents_queued,
-	torrents_stopped,
-	torrents_checking,
-	torrents_feeds,
-
-	torrents_max
-};
-
-
 void add_torrent(libtorrent::session& ses
 	, handles_t& files
 	, std::set<libtorrent::torrent_handle>& non_files
@@ -63,6 +49,7 @@ void add_torrent(libtorrent::session& ses
 	p.flags |= add_torrent_params::flag_auto_managed;
 	p.userdata = (void*)strdup(torrent.c_str());
 	ses.async_add_torrent(p);
+
 }
 
 std::string& to_string(float v, int width, int precision = 3)
@@ -131,6 +118,7 @@ bool compare_torrent(torrent_status const* lhs, torrent_status const* rhs)
 
 bool show_torrent(libtorrent::torrent_status const& st, int torrent_filter, int* counters)
 {
+	//add all torrent status
 	++counters[torrents_all];
 
 	if (!st.paused
@@ -337,6 +325,7 @@ bool Sess::handle_alert(libtorrent::session& ses, libtorrent::alert* a
 				need_resort = true;
 			}
 		}
+		update_filtered_torrents(all_handles, filtered_handles, counters);
 	}
 	else if (torrent_finished_alert* p = alert_cast<torrent_finished_alert>(a))
 	{
@@ -433,7 +422,7 @@ void Sess::init()
 	print_send_bufs = true;
 
 	num_outstanding_resume_data = 0;
-	torrent_filter = torrents_not_paused;
+	torrent_filter = torrents_all;
 
 	g_log_file = 0;
 
@@ -532,21 +521,18 @@ AllTorrent& Sess::getItem()
 	using namespace libtorrent;
 	// loop through the alert queue to see if anything has happened.
 	ses->post_torrent_updates();
-	if (active_torrent >= int(filtered_handles.size())) active_torrent = filtered_handles.size() - 1;
-	if (active_torrent >= 0)
-	{
-		// ask for distributed copies for the selected torrent. Since this
-		// is a somewhat expensive operation, don't do it by default for
-		// all torrents
-		torrent_status const& h = *filtered_handles[active_torrent];
-		h.handle.status(
-			torrent_handle::query_distributed_copies
-			| torrent_handle::query_pieces
-			| torrent_handle::query_verified_pieces);
-	}
+
+	// ask for distributed copies for the selected torrent. Since this
+	// is a somewhat expensive operation, don't do it by default for
+	// all torrents
+	/*torrent_status const& h = *filtered_handles[active_torrent];
+	h.handle.status(
+		torrent_handle::query_distributed_copies
+		| torrent_handle::query_pieces
+		| torrent_handle::query_verified_pieces);*/
+	
 
 	std::deque<alert*> alerts;
-	int counters[torrents_max];
 	memset(counters, 0, sizeof(counters));
 
 	std::vector<feed_handle> feeds;
@@ -579,6 +565,9 @@ AllTorrent& Sess::getItem()
 		delete *i;
 	}
 	alerts.clear();
+
+	/*update_filtered_torrents(all_handles, filtered_handles, counters);
+	std::sort(filtered_handles.begin(), filtered_handles.end(), &compare_torrent);*/
 
 	libtorrent::session_status sess_stat = ses->status();
 	char const* state_str[] =
@@ -698,4 +687,172 @@ Sess* Sess::getInstance()
 {
 	static Sess Ses;
 	return &Ses;
+}
+//**********************************************************************
+void Sess::continueDownload(std::vector<int> rows)
+{
+	for each (auto h in rows)
+	{
+		torrent_status const& st = *filtered_handles[h];
+		st.handle.auto_managed(true);
+	}
+}
+
+void Sess::stopDownload(std::vector<int> rows)
+{
+	for each (auto h in rows)
+	{
+		torrent_status const& st = *filtered_handles[h];
+		st.handle.auto_managed(false);
+		st.handle.pause(torrent_handle::graceful_pause);
+	}
+}
+
+void Sess::forceStart(std::vector<int> rows)
+{
+	for each (auto h in rows)
+	{
+		torrent_status const& st = *filtered_handles[h];
+		st.handle.auto_managed(!st.auto_managed);
+		if (st.auto_managed && st.paused)
+			st.handle.resume();
+	}
+}
+
+void Sess::restart(std::vector<int> rows)
+{
+	for each (auto h in rows)
+	{
+		torrent_status const& st = *filtered_handles[h];
+
+	}
+}
+
+void Sess::stopAll()
+{
+	ses->pause();
+}
+
+void Sess::continueAll()
+{
+	ses->resume();
+}
+
+void Sess::rename(std::vector<int> rows, std::string const& new_name)
+{
+	for each (auto h in rows)
+	{
+		torrent_status const& st = *filtered_handles[h];
+		st.handle.rename_file(0, new_name + std::to_string(h));
+	}
+}
+
+//if options=1 delete document
+void Sess::deleteTask(std::vector<int> rows, bool delFile/*=false*/)
+{
+	using namespace libtorrent;
+	for each (auto h in rows)
+	{
+		torrent_status const& st = *filtered_handles[h];
+		if (st.handle.is_valid())
+		{
+			if (delFile)
+			{
+				handles_t::iterator i = std::find_if(files.begin(), files.end()
+					, boost::bind(&handles_t::value_type::second, _1) == st.handle);
+				if (i != files.end())
+				{
+					std::string path;
+					if (is_complete(i->first)) path = i->first;
+					else path = combine_path(monitor_dir, i->first);
+					remove(path, ec);
+					if (ec) printf("failed to delete .torrent file: %s\n", ec.message().c_str());
+					files.erase(i);
+				}
+				if (st.handle.is_valid())
+				{
+					ses->remove_torrent(st.handle, libtorrent::session::delete_files);
+					all_handles.erase(st);
+				}
+					
+			}
+			else
+			{
+				if (st.handle.is_valid())
+				{
+					ses->remove_torrent(st.handle);
+					all_handles.erase(st);
+				}
+					
+			}
+
+		}
+	}
+	update_filtered_torrents(all_handles, filtered_handles, counters);
+}
+
+//if options=1 delete document
+void Sess::deleteAll(bool delFile/* = false*/)
+{
+	using namespace libtorrent;
+	for each (auto h in filtered_handles)
+	{
+		auto st = *h;
+		if (st.handle.is_valid())
+		{
+			if (delFile)
+			{
+				handles_t::iterator i = std::find_if(files.begin(), files.end()
+					, boost::bind(&handles_t::value_type::second, _1) == st.handle);
+				if (i != files.end())
+				{
+					std::string path;
+					if (is_complete(i->first)) path = i->first;
+					else path = combine_path(monitor_dir, i->first);
+					remove(path, ec);
+					if (ec) printf("failed to delete .torrent file: %s\n", ec.message().c_str());
+					files.erase(i);
+				}
+				if (st.handle.is_valid())
+				{
+					ses->remove_torrent(st.handle, libtorrent::session::delete_files);
+					all_handles.erase(st);
+				}
+			}
+			else
+			{
+				if (st.handle.is_valid())
+				{
+					ses->remove_torrent(st.handle);
+					all_handles.erase(st);
+				}
+			}
+		}
+	}
+	update_filtered_torrents(all_handles, filtered_handles, counters);
+}
+
+void Sess::setDownloadRate(int bytes_per_second)
+{
+	ses->set_download_rate_limit(bytes_per_second);
+	ses->set_upload_rate_limit(bytes_per_second/8);
+}
+
+void Sess::setUploadRate(int bytes_per_second)
+{
+	ses->set_upload_rate_limit(bytes_per_second);
+	ses->set_download_rate_limit(bytes_per_second*8);
+}
+
+void Sess::saveResume()
+{
+	using namespace libtorrent;
+	for each (auto h in filtered_handles)
+	{
+		if (h->need_save_resume)
+		{
+			h->handle.save_resume_data();
+			++num_outstanding_resume_data;
+		}
+	}
 }

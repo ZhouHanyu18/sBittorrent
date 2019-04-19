@@ -40,8 +40,22 @@
 
 using boost::bind;
 using libtorrent::torrent_status;
+using libtorrent::torrent_handle;
 
 typedef std::multimap<std::string, libtorrent::torrent_handle> handles_t;
+
+enum {
+	torrents_all,
+	torrents_downloading,
+	torrents_not_paused,
+	torrents_seeding,
+	torrents_queued,
+	torrents_stopped,
+	torrents_checking,
+	torrents_feeds,
+
+	torrents_max
+};
 
 class Sess
 {
@@ -110,7 +124,7 @@ private:
 	std::string peer;
 
 	static char const* state_str[];
-
+	int counters[torrents_max];
 	struct torrent_entry
 	{
 		torrent_entry(libtorrent::torrent_handle h) : handle(h) {}
@@ -124,8 +138,8 @@ private:
 	std::set<libtorrent::torrent_handle> non_files;
 	libtorrent::session *ses;
 	//std::vector<std::string> torrents;
-	boost::unordered_set<torrent_status> all_handles;
-	std::vector<torrent_status const*> filtered_handles;
+	boost::unordered_set<torrent_status> all_handles;		//所有的种子句柄
+	std::vector<torrent_status const*> filtered_handles;	//筛选的种子句柄
 	libtorrent::error_code ec;
 private:
 	AllTorrent items;
@@ -136,13 +150,18 @@ public:
 	void addMagnet(std::string str);
 	bool has_task = false;
 public:
-	void continueDownload();
-	void stopDownload();
-	void restart();
+	void continueDownload(std::vector<int> rows);
+	void stopDownload(std::vector<int> rows);
+	void forceStart(std::vector<int> rows);
+	void restart(std::vector<int> rows);
 	void stopAll();
 	void continueAll();
-	void deleteTask();
-	void deleteAll();
+	void rename(std::vector<int> rows, const std::string &new_name);
+	void deleteTask(std::vector<int> rows, bool delFile = false);
+	void deleteAll(bool delFile = false);
+	void setDownloadRate(int bytes_per_second);
+	void setUploadRate(int bytes_per_second);
+	void saveResume();
 
 };
 #endif //SESS_H
