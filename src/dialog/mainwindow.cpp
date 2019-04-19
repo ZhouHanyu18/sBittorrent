@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	pStatusForm = new StatusForm(this);
 	pStatusForm->move(0, 370);
-	pStatusForm->show();
+	//pStatusForm->show();
 
 	qRegisterMetaType<AllTorrent>("AllTorrent&");
 	connect(this, &MainWindow::thSignal, this, &MainWindow::onThSignal);
@@ -73,7 +73,7 @@ void MainWindow::resizeEvent(QResizeEvent *e)
 		pStatusForm->move(0, realHeight-30);
 	}
 }
-
+//**************************Magnet和Torrent****************************************
 void MainWindow::on_addMagnet_triggered()
 {
 	pMagnetDialog = new MagnetDialog(this);
@@ -107,40 +107,49 @@ void MainWindow::on_addTorrent_triggered()
 	}
 	
 }
-
+//************************************绑定右键菜单******************************************************
 void MainWindow::on_continue_2_triggered()
 {
-
+	pDownloadForm->getSelection();
+	pDownloadForm->click_continueAction();
 }
 
 void MainWindow::on_stop_triggered()
 {
-
+	pDownloadForm->getSelection();
+	pDownloadForm->click_stopAction();
 }
 
 void MainWindow::on_restart_triggered()
 {
-
+	pDownloadForm->getSelection();
+	pDownloadForm->click_restartAction();
 }
 
 void MainWindow::on_allStop_triggered()
 {
-
+	pDownloadForm->stopAllTask();
 }
 
 void MainWindow::on_allContinue_triggered()
 {
+	pDownloadForm->continueAllTask();
+}
 
+void MainWindow::on_delete_all_triggered()
+{
+	pDownloadForm->deleteAllTask();
 }
 
 void MainWindow::on_delete_2_triggered()
 {
-
+	pDownloadForm->getSelection();
+	pDownloadForm->click_deleteAction();
 }
-
+//****************************************************************************
 void MainWindow::on_close_triggered()
 {
-
+	
 }
 
 void MainWindow::on_setting_triggered()
@@ -162,3 +171,4 @@ void MainWindow::on_search_triggered()
 {
 
 }
+

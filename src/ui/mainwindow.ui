@@ -85,6 +85,7 @@
     <addaction name="allContinue"/>
     <addaction name="separator"/>
     <addaction name="delete_2"/>
+    <addaction name="delete_all"/>
    </widget>
    <widget class="QMenu" name="menu_3">
     <property name="title">
@@ -242,6 +243,11 @@
    </property>
    <property name="font">
     <font/>
+   </property>
+  </action>
+  <action name="delete_all">
+   <property name="text">
+    <string>删除所有</string>
    </property>
   </action>
  </widget>

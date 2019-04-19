@@ -135,5 +135,14 @@ public:
 	void addTorrent(std::string str);
 	void addMagnet(std::string str);
 	bool has_task = false;
+public:
+	void continueDownload();
+	void stopDownload();
+	void restart();
+	void stopAll();
+	void continueAll();
+	void deleteTask();
+	void deleteAll();
+
 };
 #endif //SESS_H

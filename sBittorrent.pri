@@ -16,7 +16,8 @@ HEADERS += ./include/apps/download.h \
     ./include/dialog/torrentdialog.h \
     ./include/tools/format.h \
     ./include/dialog/statusform.h \
-    ./include/apps/information.h
+    ./include/apps/information.h \
+    ./include/dialog/menuform.h
 SOURCES += ./src/apps/asio.cpp \
     ./src/apps/download.cpp \
     ./src/apps/main.cpp \
@@ -26,9 +27,11 @@ SOURCES += ./src/apps/asio.cpp \
     ./src/dialog/mainwindow.cpp \
     ./src/dialog/torrentdialog.cpp \
     ./src/tools/format.cpp \
-    ./src/dialog/statusform.cpp
+    ./src/dialog/statusform.cpp \
+    ./src/dialog/menuform.cpp
 FORMS += ./src/ui/mainwindow.ui \
     ./src/ui/torrentdialog.ui \
     ./src/ui/magnetdialog.ui \
     ./src/ui/downloadform.ui \
-    ./src/ui/statusform.ui
+    ./src/ui/statusform.ui \
+    ./src/ui/menuform.ui

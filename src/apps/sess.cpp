@@ -566,7 +566,7 @@ AllTorrent& Sess::getItem()
 			if (!handle_alert(*ses, *i, files, non_files, counters
 			, all_handles, filtered_handles, need_resort))
 			{
-				printf("Didn't handle the alert\n");
+				//printf("Didn't handle the alert\n");
 			}
 		} TORRENT_CATCH(std::exception& e) {}
 
@@ -597,24 +597,25 @@ AllTorrent& Sess::getItem()
 			attr.name = tools::format::Utf8ToAscii(s.name);
 		attr.status = state_str[s.state];
 		attr.download_rate = add_suffix(s.download_rate, "/s");
-		attr.download = add_suffix(s.total_download);
+		attr.download = add_suffix(s.total_done);
 		attr.upload_rate = add_suffix(s.upload_rate, "/s");
 		attr.upload = add_suffix(s.total_upload);
 		attr.time_download = add_suffix(s.all_time_download);
-		attr.per = s.progress_ppm / 10000.f;
+		attr.per = (float)s.total_done/(float)s.total_wanted*100;
 		attr.peers = s.num_peers;
 		attr.seeds = s.num_seeds;
 
-		auto pfile = s.handle.torrent_file();
+		attr.size = add_suffix(s.total_wanted);
+		/*auto pfile = s.handle.torrent_file();
 		if (pfile)
-			attr.size = add_suffix(pfile->total_size());
+			attr.size = add_suffix(pfile->total_size());*/
 
 		items.item.push_back(attr);
 		++items.size;
 
-		printf("%f\n",attr.per);
+		/*printf("%f\n",attr.per);
 		puts(attr.time_download.c_str());
-		puts(attr.size.c_str());
+		puts(attr.size.c_str());*/
 
 	}
 	items.dht_Node = sess_stat.dht_nodes;
@@ -623,8 +624,8 @@ AllTorrent& Sess::getItem()
 	items.total_upload_rate = add_suffix(sess_stat.upload_rate, "/s");
 	items.total_upload = add_suffix(sess_stat.total_upload);
 
-	puts(items.total_download_rate.c_str());
-	puts(items.total_download.c_str());
+	/*puts(items.total_download_rate.c_str());
+	puts(items.total_download.c_str());*/
 	return items;
 }
 

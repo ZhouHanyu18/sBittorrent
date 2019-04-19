@@ -57,6 +57,7 @@ private slots:
     void on_about_triggered();
     void on_update_triggered();
     void on_search_triggered();
+    void on_delete_all_triggered();
 };
 
 #endif // MAINWINDOW_H
