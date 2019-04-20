@@ -71,7 +71,7 @@
     <addaction name="addMagnet"/>
     <addaction name="addTorrent"/>
     <addaction name="separator"/>
-    <addaction name="close"/>
+    <addaction name="save"/>
    </widget>
    <widget class="QMenu" name="menu_2">
     <property name="title">
@@ -100,6 +100,7 @@
     </property>
     <addaction name="about"/>
     <addaction name="update"/>
+    <addaction name="praise"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menu_2"/>
@@ -205,13 +206,13 @@
     <string>删除</string>
    </property>
   </action>
-  <action name="close">
+  <action name="save">
    <property name="icon">
     <iconset>
-     <normaloff>media/icons/exit.png</normaloff>media/icons/exit.png</iconset>
+     <normaloff>media/icons/save.png</normaloff>media/icons/save.png</iconset>
    </property>
    <property name="text">
-    <string>关闭</string>
+    <string>保存</string>
    </property>
   </action>
   <action name="setting">
@@ -224,11 +225,19 @@
    </property>
   </action>
   <action name="about">
+   <property name="icon">
+    <iconset>
+     <normaloff>media/icons/about.png</normaloff>media/icons/about.png</iconset>
+   </property>
    <property name="text">
     <string>关于</string>
    </property>
   </action>
   <action name="update">
+   <property name="icon">
+    <iconset>
+     <normaloff>media/icons/update.png</normaloff>media/icons/update.png</iconset>
+   </property>
    <property name="text">
     <string>在线升级</string>
    </property>
@@ -246,8 +255,21 @@
    </property>
   </action>
   <action name="delete_all">
+   <property name="icon">
+    <iconset>
+     <normaloff>media/icons/exit.png</normaloff>media/icons/exit.png</iconset>
+   </property>
    <property name="text">
     <string>删除所有</string>
+   </property>
+  </action>
+  <action name="praise">
+   <property name="icon">
+    <iconset>
+     <normaloff>media/icons/praise.png</normaloff>media/icons/praise.png</iconset>
+   </property>
+   <property name="text">
+    <string>点赞</string>
    </property>
   </action>
  </widget>

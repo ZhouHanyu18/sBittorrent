@@ -23,7 +23,7 @@ void StatusForm::on_TotalUploadRate_clicked()
 
 }
 
-void StatusForm::setStatus(AllTorrent& items)
+void StatusForm::setStatus(const AllTorrent& items)
 {
 	ui->TotalDownloadRate->setText(QString::fromLocal8Bit("%1 ( %2 )").
 		arg(QString::fromLocal8Bit(items.total_download_rate.c_str())).

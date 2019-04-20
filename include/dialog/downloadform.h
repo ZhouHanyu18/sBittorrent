@@ -6,6 +6,11 @@
 #include <QProgressBar>
 #include <QMenu>
 #include <QDebug>
+#include <QClipboard>
+#include<QInputDialog>
+#include<QDesktopServices>
+#include<QUrl>
+#include<QMessageBox>
 
 //#include "dialog/menuform.h"
 #include "apps/sess.h"
@@ -26,6 +31,7 @@ public:
 	void init();
 private:
     Ui::DownloadForm *ui;
+	Sess *pSess = Sess::getInstance();
 	QTableWidget *pTableWidget;
 	QProgressBar *pProgressBar;			//进度条
 	// 右键菜单
@@ -39,14 +45,24 @@ private:
 	QAction *copyAction;
 	QAction *renameAction;
 	QAction *openAction;
+	bool bRandName;
+	int aBool[100];
+	QString RandName;
 	//QModelIndexList selectedindexes;
 	std::vector<int> rows;
+	AllTorrent *list;
 public:
-	void setList(AllTorrent& list);
+	void addMagnet(const std::string &str);
+	void addTorrent(const std::string &str);
+	bool has_task();
+	void getItem();
+	const AllTorrent& Items();
+	void setList();
 	void getSelection();
 	void stopAllTask();
 	void continueAllTask();
 	void deleteAllTask();
+	void saveResume();
 public slots:
 	void on_tableWidget_customContextMenuRequested(QPoint pos);		//右键响应
 	void click_continueAction();

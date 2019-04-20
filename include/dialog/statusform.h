@@ -24,7 +24,7 @@ private:
     Ui::StatusForm *ui;
 	
 public:
-	void setStatus(AllTorrent& items);
+	void setStatus(const AllTorrent& items);
 };
 
 #endif // STATUSFORM_H

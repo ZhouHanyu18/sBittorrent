@@ -14,11 +14,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	pStatusForm = new StatusForm(this);
 	pStatusForm->move(0, 370);
-	//pStatusForm->show();
+	pStatusForm->show();
 
-	qRegisterMetaType<AllTorrent>("AllTorrent&");
+	//qRegisterMetaType<AllTorrent>("AllTorrent&");
 	connect(this, &MainWindow::thSignal, this, &MainWindow::onThSignal);
-	boost::thread th(&MainWindow::setThread, this);
+	th = boost::thread(&MainWindow::setThread, this);
 	th.detach();
 }
 
@@ -26,21 +26,20 @@ void MainWindow::setThread()
 {
 	while(true)
 	{
-		Sess *p = Sess::getInstance();
-		if (p->has_task)
+		if (pDownloadForm->has_task())
 		{
 			Sleep(1000);
-			AllTorrent items = p->getItem();
-			emit thSignal(items);
+			pDownloadForm->getItem();
+			emit thSignal();
 			//pDownloadForm->setlist(items);
 		}
 	}
 }
 
-void MainWindow::onThSignal(AllTorrent& items)
+void MainWindow::onThSignal()
 {
-	pDownloadForm->setList(items);
-	pStatusForm->setStatus(items);
+	pDownloadForm->setList();
+	pStatusForm->setStatus(pDownloadForm->Items());
 }
 
 //void MainWindow::timerEvent(QTimerEvent *event)
@@ -49,9 +48,19 @@ void MainWindow::onThSignal(AllTorrent& items)
 //	}
 //}
 
+// 重写closeEvent: 确认退出对话框
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+	on_save_triggered();
+	event->accept(); // 接受退出信号，程序退出
+}
+
+
 MainWindow::~MainWindow()
 {
 	//killTimer(m_nTimerID);
+	delete pStatusForm;
+	delete pDownloadForm;
     delete ui;
 }
 
@@ -85,14 +94,12 @@ void MainWindow::on_addMagnet_triggered()
 
 	if (strncmp(cStr, "magnet:", 7) == 0)
 	{
-		Sess *p = Sess::getInstance();
-		p->addMagnet(tools::format::AsciiToUtf8(cStr));
+		pDownloadForm->addMagnet(cStr);
 	}
 	else
 	{
 		QMessageBox::information(this, "Error", QString::fromLocal8Bit("请输入正确链接"));
 	}
-	
 }
 
 void MainWindow::on_addTorrent_triggered()
@@ -102,8 +109,7 @@ void MainWindow::on_addTorrent_triggered()
 	{
 		QByteArray temp = file_name.toLocal8Bit();
 		std::string str = temp.data();
-		Sess *p = Sess::getInstance();
-		p->addTorrent(tools::format::AsciiToUtf8(str));
+		pDownloadForm->addTorrent(str);
 	}
 	
 }
@@ -147,9 +153,9 @@ void MainWindow::on_delete_2_triggered()
 	pDownloadForm->click_deleteAction();
 }
 //****************************************************************************
-void MainWindow::on_close_triggered()
+void MainWindow::on_save_triggered()
 {
-	
+	pDownloadForm->saveResume();
 }
 
 void MainWindow::on_setting_triggered()
@@ -172,3 +178,8 @@ void MainWindow::on_search_triggered()
 
 }
 
+
+void MainWindow::on_praise_triggered()
+{
+
+}

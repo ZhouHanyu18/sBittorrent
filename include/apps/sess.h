@@ -162,6 +162,8 @@ public:
 	void setDownloadRate(int bytes_per_second);
 	void setUploadRate(int bytes_per_second);
 	void saveResume();
+	void getMagnet(std::vector<int> rows, std::string& magnet);
+	void getFileUrl(std::vector<int> rows, std::string& url);
 
 };
 #endif //SESS_H

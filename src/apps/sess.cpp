@@ -520,6 +520,8 @@ AllTorrent& Sess::getItem()
 {
 	using namespace libtorrent;
 	// loop through the alert queue to see if anything has happened.
+	if (ses == nullptr)
+		return items;
 	ses->post_torrent_updates();
 
 	// ask for distributed copies for the selected torrent. Since this
@@ -570,10 +572,12 @@ AllTorrent& Sess::getItem()
 	std::sort(filtered_handles.begin(), filtered_handles.end(), &compare_torrent);*/
 
 	libtorrent::session_status sess_stat = ses->status();
+	/*char const* state_str[] =
+	{ "queued_for_checking", "checking", "downloading_metadata"
+	, "downloading", "finished", "seeding", "allocating", "checking (r)" };*/
 	char const* state_str[] =
-	{ "checking (q)", "checking", "dl metadata"
-	, "downloading", "finished", "seeding", "allocating", "checking (r)" };
-
+	{ "等待...", "检查...", "下载.."
+	, "下载..", "完成", "做种", "分配...", "恢复..." };
 	items.item.clear();
 	items.size = 0;
 	for (std::vector<torrent_status const*>::iterator i = filtered_handles.begin();
@@ -584,7 +588,11 @@ AllTorrent& Sess::getItem()
 		attr.queue_pos = s.queue_position;
 		if (s.name != "")
 			attr.name = tools::format::Utf8ToAscii(s.name);
-		attr.status = state_str[s.state];
+		if (s.handle.is_paused())
+			attr.status = "暂停.";
+		else
+			attr.status = state_str[s.state];
+
 		attr.download_rate = add_suffix(s.download_rate, "/s");
 		attr.download = add_suffix(s.total_done);
 		attr.upload_rate = add_suffix(s.upload_rate, "/s");
@@ -713,10 +721,11 @@ void Sess::forceStart(std::vector<int> rows)
 	for each (auto h in rows)
 	{
 		torrent_status const& st = *filtered_handles[h];
-		st.handle.auto_managed(!st.auto_managed);
-		if (st.auto_managed && st.paused)
+		st.handle.auto_managed(true);
+		if (st.paused)
 			st.handle.resume();
 	}
+	ses->resume();
 }
 
 void Sess::restart(std::vector<int> rows)
@@ -724,17 +733,27 @@ void Sess::restart(std::vector<int> rows)
 	for each (auto h in rows)
 	{
 		torrent_status const& st = *filtered_handles[h];
-
 	}
 }
 
 void Sess::stopAll()
 {
 	ses->pause();
+	for each (auto h in filtered_handles)
+	{
+		torrent_status const& st = *h;
+		st.handle.auto_managed(false);
+		st.handle.pause(torrent_handle::graceful_pause);
+	}
 }
 
 void Sess::continueAll()
 {
+	for each (auto h in filtered_handles)
+	{
+		torrent_status const& st = *h;
+		st.handle.auto_managed(true);
+	}
 	ses->resume();
 }
 
@@ -743,7 +762,7 @@ void Sess::rename(std::vector<int> rows, std::string const& new_name)
 	for each (auto h in rows)
 	{
 		torrent_status const& st = *filtered_handles[h];
-		st.handle.rename_file(0, new_name + std::to_string(h));
+		//st.handle.rename_file(st.handle.torrent_file()->files().file_index, new_name + std::to_string(h));
 	}
 }
 
@@ -774,7 +793,6 @@ void Sess::deleteTask(std::vector<int> rows, bool delFile/*=false*/)
 					ses->remove_torrent(st.handle, libtorrent::session::delete_files);
 					all_handles.erase(st);
 				}
-					
 			}
 			else
 			{
@@ -783,9 +801,7 @@ void Sess::deleteTask(std::vector<int> rows, bool delFile/*=false*/)
 					ses->remove_torrent(st.handle);
 					all_handles.erase(st);
 				}
-					
 			}
-
 		}
 	}
 	update_filtered_torrents(all_handles, filtered_handles, counters);
@@ -852,7 +868,30 @@ void Sess::saveResume()
 		if (h->need_save_resume)
 		{
 			h->handle.save_resume_data();
-			++num_outstanding_resume_data;
+		}
+	}
+}
+
+void Sess::getMagnet(std::vector<int> rows, std::string& magnet)
+{
+	for each (auto h in rows)
+	{
+		torrent_status const& st = *filtered_handles[h];
+		magnet += libtorrent::make_magnet_uri(st.handle);
+		magnet += '\n';
+	}
+}
+
+void Sess::getFileUrl(std::vector<int> rows, std::string& url)
+{
+	url = save_path;
+	if (rows.size() == 1)
+	{
+		auto pp = filtered_handles[rows[0]]->handle.torrent_file();
+		if (pp->num_files() > 1)
+		{
+			url += '/';
+			url += filtered_handles[rows[0]]->name;
 		}
 	}
 }
