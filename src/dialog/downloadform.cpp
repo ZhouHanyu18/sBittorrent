@@ -8,12 +8,15 @@ DownloadForm::DownloadForm(QWidget *parent) :
     ui(new Ui::DownloadForm)
 {
     ui->setupUi(this);
-	pSess = Sess::getInstance();
-
 	init();
+
+	list = NULL;
+	pSess = Sess::getInstance();
 
 	//设置右键菜单
 	ui->tableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+	//设置双击事件
+	connect(ui->tableWidget, &QTableWidget::itemDoubleClicked, this, &DownloadForm::double_click);
 	bRandName = FALSE;
 	memset(aBool, 0, sizeof(aBool));
 }
@@ -163,6 +166,19 @@ void DownloadForm::setList()
 	
 }
 //****************************************************************************************
+void DownloadForm::double_click(QTableWidgetItem *item)
+{
+	qDebug() << "double_click";
+	int i = item->row();
+	rows.clear();
+	rows.push_back(i);
+	if (list->item[i].status.find("..") != -1)
+		click_stopAction();
+	else
+		click_continueAction();
+	
+}
+
 void DownloadForm::on_tableWidget_customContextMenuRequested(QPoint pos)
 {
 	pMenu = new QMenu(ui->tableWidget);
@@ -345,10 +361,11 @@ void DownloadForm::click_renameAction()
 			}
 			if (rows.size() == 0)
 			{
-				for (int i = 0; i < list->size; ++i)
-				{
-					aBool[i] = 1;
-				}
+				if (list)
+					for (int i = 0; i < list->size; ++i)
+					{
+						aBool[i] = 1;
+					}
 			}
 		}
 		else

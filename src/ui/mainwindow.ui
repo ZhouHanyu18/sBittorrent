@@ -130,6 +130,7 @@
    <addaction name="stop"/>
    <addaction name="restart"/>
    <addaction name="separator"/>
+   <addaction name="save"/>
    <addaction name="delete_2"/>
    <addaction name="search"/>
   </widget>
@@ -270,6 +271,11 @@
    </property>
    <property name="text">
     <string>点赞</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
    </property>
   </action>
  </widget>

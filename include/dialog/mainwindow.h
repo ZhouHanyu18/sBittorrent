@@ -8,6 +8,9 @@
 #include "dialog/torrentdialog.h"
 #include "dialog/downloadform.h"
 #include "dialog/statusform.h"
+#include "dialog/searchform.h"
+#include "dialog/settingdialog.h"
+#include "dialog/aboutdialog.h"
 
 #include "test/debug_test.h"
 #include "apps/download.h"
@@ -32,13 +35,16 @@ private slots:
 	void resizeEvent(QResizeEvent *e);
 	void on_addTorrent_triggered();
 
-private:
+public:
     Ui::MainWindow *ui;
 	void closeEvent(QCloseEvent *event);    // 重写closeEvent的申明
 	MagnetDialog *pMagnetDialog;
 	TorrentDialog *pTorrentDialog;
 	DownloadForm *pDownloadForm;
 	StatusForm *pStatusForm;
+	SearchForm *pSearchForm;
+	AboutDialog *pAboutDialog;
+	SettingDialog *pSettingDialog;
 	int m_nTimerID;
 	//virtual void timerEvent(QTimerEvent *event);	//定义定时器
 	boost::thread th;

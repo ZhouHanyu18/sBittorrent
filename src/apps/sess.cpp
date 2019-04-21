@@ -487,7 +487,7 @@ void Sess::init()
 
 	ses->set_proxy(ps);				//设置代理服务器
 
-	ses->listen_on(std::make_pair(6881, 6881)		//监听端口的范围
+	ses->listen_on(std::make_pair(9511, 9511)		//监听端口的范围
 		, ec, bind_to_interface.c_str());
 
 #ifndef TORRENT_DISABLE_DHT
@@ -496,11 +496,11 @@ void Sess::init()
 		settings.use_dht_as_fallback = false;
 
 		ses->add_dht_router(std::make_pair(
-			std::string("router.bittorrent.com"), 6881));
+			std::string("router.bittorrent.com"), 9511));
 		ses->add_dht_router(std::make_pair(
-			std::string("router.utorrent.com"), 6881));
+			std::string("router.utorrent.com"), 9511));
 		ses->add_dht_router(std::make_pair(
-			std::string("router.bitcomet.com"), 6881));
+			std::string("router.bitcomet.com"), 9511));
 
 		ses->start_dht();
 	}
@@ -520,7 +520,7 @@ AllTorrent& Sess::getItem()
 {
 	using namespace libtorrent;
 	// loop through the alert queue to see if anything has happened.
-	if (ses == nullptr)
+	if ((int)ses == 0xdddddddd || (int)ses == 0xfeeefeee || (int)ses == 0xFFFFFFFFFFFFFFFF)
 		return items;
 	ses->post_torrent_updates();
 
@@ -730,9 +730,16 @@ void Sess::forceStart(std::vector<int> rows)
 
 void Sess::restart(std::vector<int> rows)
 {
+	std::vector<std::string> magnets;
 	for each (auto h in rows)
 	{
 		torrent_status const& st = *filtered_handles[h];
+		magnets.push_back(libtorrent::make_magnet_uri(st.handle).substr(0,60));
+	}
+	deleteTask(rows, TRUE);
+	for each (auto mag in magnets)
+	{
+		addMagnet(mag);
 	}
 }
 
@@ -784,6 +791,8 @@ void Sess::deleteTask(std::vector<int> rows, bool delFile/*=false*/)
 					std::string path;
 					if (is_complete(i->first)) path = i->first;
 					else path = combine_path(monitor_dir, i->first);
+					remove(path, ec);
+					path = combine_path(save_path, combine_path(".resume", to_hex(i->second.info_hash().to_string()) + ".resume"));
 					remove(path, ec);
 					if (ec) printf("failed to delete .torrent file: %s\n", ec.message().c_str());
 					files.erase(i);

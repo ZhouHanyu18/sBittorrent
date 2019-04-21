@@ -65,6 +65,7 @@ public:
 	void saveResume();
 public slots:
 	void on_tableWidget_customContextMenuRequested(QPoint pos);		//ÓÒ¼üÏìÓ¦
+	void double_click(QTableWidgetItem *item);		//Ë«»÷ÊÂ¼ş
 	void click_continueAction();
 	void click_stopAction();
 	void click_forceStartAction();

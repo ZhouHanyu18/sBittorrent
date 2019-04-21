@@ -2,7 +2,6 @@
 #define STATUSFORM_H
 
 #include <QWidget>
-
 #include "apps/information.h"
 
 namespace Ui {
@@ -20,6 +19,8 @@ public:
 private slots:
     void on_TotalDownloadRate_clicked();
 	void on_TotalUploadRate_clicked();
+    void on_DownloadButton_clicked();
+
 private:
     Ui::StatusForm *ui;
 	

@@ -22,21 +22,6 @@
     <Filter Include="src\dialog">
       <UniqueIdentifier>{68e2299f-b1b0-4eb6-be5a-4aace313cd29}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Generated Files">
-      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
-      <Extensions>moc;h;cpp</Extensions>
-      <ParseFiles>true</ParseFiles>
-    </Filter>
-    <Filter Include="Generated Files\Debug">
-      <UniqueIdentifier>{35ec0049-570a-4956-ab2f-ff34d7bfe795}</UniqueIdentifier>
-      <Extensions>cpp;moc</Extensions>
-      <SourceControlFiles>False</SourceControlFiles>
-    </Filter>
-    <Filter Include="Generated Files\Release">
-      <UniqueIdentifier>{0f039ae3-aa5a-4c47-83e6-1d0f8b404e3b}</UniqueIdentifier>
-      <Extensions>cpp;moc</Extensions>
-      <SourceControlFiles>False</SourceControlFiles>
-    </Filter>
     <Filter Include="include\dialog">
       <UniqueIdentifier>{883b3e24-113c-4e77-96cd-2ed85d3b8a80}</UniqueIdentifier>
     </Filter>
@@ -46,6 +31,21 @@
     <Filter Include="src\tools">
       <UniqueIdentifier>{bfc3415c-962d-4822-b146-88404e5b3de5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>moc;h;cpp</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files\Debug">
+      <UniqueIdentifier>{71465e96-3c58-487f-b174-68f30d92bc71}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\Release">
+      <UniqueIdentifier>{f7147b34-f659-4ca9-8a64-d318f00f1786}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\apps\asio.cpp">
@@ -53,42 +53,6 @@
     </ClCompile>
     <ClCompile Include="src\apps\main.cpp">
       <Filter>src\apps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dialog\magnetdialog.cpp">
-      <Filter>src\dialog</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dialog\mainwindow.cpp">
-      <Filter>src\dialog</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dialog\torrentdialog.cpp">
-      <Filter>src\dialog</Filter>
-    </ClCompile>
-    <ClCompile Include="Temp\GeneratedFiles\Debug\moc_magnetdialog.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="Temp\GeneratedFiles\Release\moc_magnetdialog.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="Temp\GeneratedFiles\Debug\moc_mainwindow.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="Temp\GeneratedFiles\Release\moc_mainwindow.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="Temp\GeneratedFiles\Debug\moc_torrentdialog.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="Temp\GeneratedFiles\Release\moc_torrentdialog.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="Temp\GeneratedFiles\Debug\moc_downloadform.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="Temp\GeneratedFiles\Release\moc_downloadform.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dialog\downloadform.cpp">
-      <Filter>src\dialog</Filter>
     </ClCompile>
     <ClCompile Include="src\apps\download.cpp">
       <Filter>src\apps</Filter>
@@ -99,41 +63,80 @@
     <ClCompile Include="src\tools\format.cpp">
       <Filter>src\tools</Filter>
     </ClCompile>
+    <ClCompile Include="src\dialog\aboutdialog.cpp">
+      <Filter>src\dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dialog\downloadform.cpp">
+      <Filter>src\dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dialog\magnetdialog.cpp">
+      <Filter>src\dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dialog\mainwindow.cpp">
+      <Filter>src\dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dialog\searchform.cpp">
+      <Filter>src\dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dialog\settingdialog.cpp">
+      <Filter>src\dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dialog\statusform.cpp">
+      <Filter>src\dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dialog\torrentdialog.cpp">
+      <Filter>src\dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="Temp\GeneratedFiles\Debug\moc_mainwindow.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Temp\GeneratedFiles\Release\moc_mainwindow.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Temp\GeneratedFiles\Debug\moc_downloadform.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Temp\GeneratedFiles\Release\moc_downloadform.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Temp\GeneratedFiles\Debug\moc_settingdialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Temp\GeneratedFiles\Release\moc_settingdialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Temp\GeneratedFiles\Debug\moc_aboutdialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Temp\GeneratedFiles\Release\moc_aboutdialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Temp\GeneratedFiles\Debug\moc_torrentdialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Temp\GeneratedFiles\Release\moc_torrentdialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Temp\GeneratedFiles\Debug\moc_searchform.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Temp\GeneratedFiles\Release\moc_searchform.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
     <ClCompile Include="Temp\GeneratedFiles\Debug\moc_statusform.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="Temp\GeneratedFiles\Release\moc_statusform.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="src\dialog\statusform.cpp">
-      <Filter>src\dialog</Filter>
+    <ClCompile Include="Temp\GeneratedFiles\Debug\moc_magnetdialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Temp\GeneratedFiles\Release\moc_magnetdialog.cpp">
+      <Filter>Generated Files\Release</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="include\dialog\magnetdialog.h">
-      <Filter>include\dialog</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\dialog\mainwindow.h">
-      <Filter>include\dialog</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\dialog\torrentdialog.h">
-      <Filter>include\dialog</Filter>
-    </CustomBuild>
-    <CustomBuild Include="src\ui\mainwindow.ui">
-      <Filter>ui</Filter>
-    </CustomBuild>
-    <CustomBuild Include="src\ui\torrentdialog.ui">
-      <Filter>ui</Filter>
-    </CustomBuild>
-    <CustomBuild Include="src\ui\magnetdialog.ui">
-      <Filter>ui</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\dialog\downloadform.h">
-      <Filter>include\dialog</Filter>
-    </CustomBuild>
-    <CustomBuild Include="src\ui\downloadform.ui">
-      <Filter>ui</Filter>
-    </CustomBuild>
     <CustomBuild Include="include\apps\download.h">
       <Filter>include\apps</Filter>
     </CustomBuild>
@@ -146,29 +149,82 @@
     <CustomBuild Include="include\tools\format.h">
       <Filter>include\tools</Filter>
     </CustomBuild>
-    <CustomBuild Include="Temp\GeneratedFiles\ui_downloadform.h">
-      <Filter>Generated Files</Filter>
+    <CustomBuild Include="include\apps\information.h">
+      <Filter>include\apps</Filter>
     </CustomBuild>
-    <CustomBuild Include="Temp\GeneratedFiles\ui_magnetdialog.h">
-      <Filter>Generated Files</Filter>
+    <CustomBuild Include="src\ui\aboutdialog.ui">
+      <Filter>ui</Filter>
     </CustomBuild>
-    <CustomBuild Include="Temp\GeneratedFiles\ui_mainwindow.h">
-      <Filter>Generated Files</Filter>
+    <CustomBuild Include="src\ui\settingdialog.ui">
+      <Filter>ui</Filter>
     </CustomBuild>
-    <CustomBuild Include="Temp\GeneratedFiles\ui_torrentdialog.h">
-      <Filter>Generated Files</Filter>
+    <CustomBuild Include="src\ui\mainwindow.ui">
+      <Filter>ui</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\dialog\statusform.h">
-      <Filter>include\dialog</Filter>
+    <CustomBuild Include="src\ui\searchform.ui">
+      <Filter>ui</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ui\downloadform.ui">
+      <Filter>ui</Filter>
     </CustomBuild>
     <CustomBuild Include="src\ui\statusform.ui">
       <Filter>ui</Filter>
     </CustomBuild>
-    <CustomBuild Include="Temp\GeneratedFiles\ui_statusform.h">
+    <CustomBuild Include="src\ui\torrentdialog.ui">
+      <Filter>ui</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ui\magnetdialog.ui">
+      <Filter>ui</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\dialog\mainwindow.h">
+      <Filter>include\dialog</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\dialog\downloadform.h">
+      <Filter>include\dialog</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\dialog\settingdialog.h">
+      <Filter>include\dialog</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\dialog\aboutdialog.h">
+      <Filter>include\dialog</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\dialog\torrentdialog.h">
+      <Filter>include\dialog</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\dialog\searchform.h">
+      <Filter>include\dialog</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\dialog\statusform.h">
+      <Filter>include\dialog</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\dialog\magnetdialog.h">
+      <Filter>include\dialog</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Temp\GeneratedFiles\ui_aboutdialog.h">
       <Filter>Generated Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\apps\information.h">
-      <Filter>include\apps</Filter>
-    </CustomBuild>
+    </ClInclude>
+    <ClInclude Include="Temp\GeneratedFiles\ui_settingdialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Temp\GeneratedFiles\ui_mainwindow.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Temp\GeneratedFiles\ui_searchform.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Temp\GeneratedFiles\ui_downloadform.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Temp\GeneratedFiles\ui_statusform.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Temp\GeneratedFiles\ui_torrentdialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Temp\GeneratedFiles\ui_magnetdialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

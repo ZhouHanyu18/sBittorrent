@@ -7,6 +7,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+	QWidget *spacer = new QWidget(this);
+	spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	//toolBar is a pointer to an existing toolbar  
+	ui->mainToolBar->addWidget(spacer);
+	ui->mainToolBar->addAction(ui->praise);
 	pDownloadForm = new DownloadForm(this);
 	pDownloadForm->move(0, 50);
 	pDownloadForm->show();
@@ -16,6 +21,9 @@ MainWindow::MainWindow(QWidget *parent) :
 	pStatusForm->move(0, 370);
 	pStatusForm->show();
 
+	pSearchForm = new SearchForm(this);
+	pSearchForm->move(0, 50);
+	pSearchForm->hide();
 	//qRegisterMetaType<AllTorrent>("AllTorrent&");
 	connect(this, &MainWindow::thSignal, this, &MainWindow::onThSignal);
 	th = boost::thread(&MainWindow::setThread, this);
@@ -52,6 +60,7 @@ void MainWindow::onThSignal()
 void MainWindow::closeEvent(QCloseEvent *event)
 {
 	on_save_triggered();
+	th.~thread();
 	event->accept(); // 接受退出信号，程序退出
 }
 
@@ -80,6 +89,12 @@ void MainWindow::resizeEvent(QResizeEvent *e)
 	{
 		pStatusForm->resize(realWidth, 30);
 		pStatusForm->move(0, realHeight-30);
+	}
+
+	if (pSearchForm != NULL)
+	{
+		pSearchForm->resize(realWidth, realHeight - 80);
+		pSearchForm->init();
 	}
 }
 //**************************Magnet和Torrent****************************************
@@ -158,14 +173,24 @@ void MainWindow::on_save_triggered()
 	pDownloadForm->saveResume();
 }
 
+void MainWindow::on_search_triggered()
+{
+	pDownloadForm->hide();
+	pSearchForm->show();
+
+}
+
 void MainWindow::on_setting_triggered()
 {
-
+	pSettingDialog = new SettingDialog(this);
+	pSettingDialog->exec();
 }
 
 void MainWindow::on_about_triggered()
 {
-
+	pAboutDialog = new AboutDialog(this);
+	pAboutDialog->exec();
+	
 }
 
 void MainWindow::on_update_triggered()
@@ -173,13 +198,7 @@ void MainWindow::on_update_triggered()
 
 }
 
-void MainWindow::on_search_triggered()
-{
-
-}
-
-
 void MainWindow::on_praise_triggered()
 {
-
+	QDesktopServices::openUrl(QUrl(QString("https://github.com/ZhouHanyu18/sBittorrent"), QUrl::TolerantMode));
 }
