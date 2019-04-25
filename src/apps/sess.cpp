@@ -496,11 +496,11 @@ void Sess::init()
 		settings.use_dht_as_fallback = false;
 
 		ses->add_dht_router(std::make_pair(
-			std::string("router.bittorrent.com"), 9511));
+			std::string("router.bittorrent.com"), 6881));
 		ses->add_dht_router(std::make_pair(
-			std::string("router.utorrent.com"), 9511));
+			std::string("router.utorrent.com"), 6881));
 		ses->add_dht_router(std::make_pair(
-			std::string("router.bitcomet.com"), 9511));
+			std::string("router.bitcomet.com"), 6881));
 
 		ses->start_dht();
 	}
@@ -510,7 +510,7 @@ void Sess::init()
 	settings.user_agent = "sBittorrent/" LIBTORRENT_VERSION;
 	settings.choking_algorithm = session_settings::auto_expand_choker;
 	settings.disk_cache_algorithm = session_settings::avoid_readback;
-
+	settings.active_downloads = 10;
 	settings.volatile_read_cache = false;
 	ses->set_settings(settings);				//应用配置
 
@@ -687,7 +687,6 @@ void Sess::addMagnet(std::string str)
 
 Sess::~Sess()
 {
-	delete ses;
 	printf("调用析构函数");
 }
 

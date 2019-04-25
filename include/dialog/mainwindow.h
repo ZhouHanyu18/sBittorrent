@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QCloseEvent>
+#include <QFileDialog>
+#include <QMetaType> 
 
 #include "dialog/magnetdialog.h"
 #include "dialog/torrentdialog.h"
@@ -15,8 +17,7 @@
 #include "test/debug_test.h"
 #include "apps/download.h"
 
-#include <qfiledialog.h>
-#include <QMetaType> 
+
 
 namespace Ui {
 class MainWindow;
@@ -34,7 +35,6 @@ private slots:
 	void on_addMagnet_triggered();
 	void resizeEvent(QResizeEvent *e);
 	void on_addTorrent_triggered();
-
 public:
     Ui::MainWindow *ui;
 	void closeEvent(QCloseEvent *event);    // 重写closeEvent的申明
@@ -48,6 +48,7 @@ public:
 	int m_nTimerID;
 	//virtual void timerEvent(QTimerEvent *event);	//定义定时器
 	boost::thread th;
+	bool bThread;
 	void setThread();
 
 signals:

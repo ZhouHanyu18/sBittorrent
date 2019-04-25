@@ -17,13 +17,13 @@ DownloadForm::DownloadForm(QWidget *parent) :
 	ui->tableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 	//设置双击事件
 	connect(ui->tableWidget, &QTableWidget::itemDoubleClicked, this, &DownloadForm::double_click);
+	//设置随机文件名
 	bRandName = FALSE;
 	memset(aBool, 0, sizeof(aBool));
 }
 
 DownloadForm::~DownloadForm()
 {
-	delete pMenu;
     delete ui;
 }
 
@@ -68,11 +68,11 @@ void DownloadForm::init()
 	
 }
 
-void DownloadForm::addMagnet(const std::string &str)
+void DownloadForm::addMagnet(const std::string str)
 {
 	if (pSess)
 	{
-		pSess->addMagnet(tools::format::AsciiToUtf8(str));
+		pSess->addMagnet(str);
 	}
 }
 

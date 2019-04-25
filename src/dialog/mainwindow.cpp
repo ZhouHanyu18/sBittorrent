@@ -26,20 +26,20 @@ MainWindow::MainWindow(QWidget *parent) :
 	pSearchForm->hide();
 	//qRegisterMetaType<AllTorrent>("AllTorrent&");
 	connect(this, &MainWindow::thSignal, this, &MainWindow::onThSignal);
+	bThread = TRUE;
 	th = boost::thread(&MainWindow::setThread, this);
 	th.detach();
 }
 
 void MainWindow::setThread()
 {
-	while(true)
+	while (bThread)
 	{
 		if (pDownloadForm->has_task())
 		{
 			Sleep(1000);
 			pDownloadForm->getItem();
 			emit thSignal();
-			//pDownloadForm->setlist(items);
 		}
 	}
 }
@@ -60,6 +60,7 @@ void MainWindow::onThSignal()
 void MainWindow::closeEvent(QCloseEvent *event)
 {
 	on_save_triggered();
+	bThread = FALSE;
 	th.~thread();
 	event->accept(); // 接受退出信号，程序退出
 }
@@ -68,8 +69,6 @@ void MainWindow::closeEvent(QCloseEvent *event)
 MainWindow::~MainWindow()
 {
 	//killTimer(m_nTimerID);
-	delete pStatusForm;
-	delete pDownloadForm;
     delete ui;
 }
 

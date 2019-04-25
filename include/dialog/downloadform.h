@@ -7,10 +7,11 @@
 #include <QMenu>
 #include <QDebug>
 #include <QClipboard>
-#include<QInputDialog>
-#include<QDesktopServices>
-#include<QUrl>
-#include<QMessageBox>
+#include <QInputDialog>
+#include <QDesktopServices>
+#include <QUrl>
+#include <QMessageBox>
+#include <string>
 
 //#include "dialog/menuform.h"
 #include "apps/sess.h"
@@ -52,7 +53,7 @@ private:
 	std::vector<int> rows;
 	AllTorrent *list;
 public:
-	void addMagnet(const std::string &str);
+	void addMagnet(const std::string str);
 	void addTorrent(const std::string &str);
 	bool has_task();
 	void getItem();
