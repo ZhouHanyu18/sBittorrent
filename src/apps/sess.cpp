@@ -1,4 +1,6 @@
 ﻿#include "apps/sess.h"
+#include <fstream>
+#include <io.h>
 
 void add_torrent(libtorrent::session& ses
 	, handles_t& files
@@ -399,6 +401,31 @@ bool Sess::handle_alert(libtorrent::session& ses, libtorrent::alert* a
 	return false;
 }
 
+/*
+path: 指定目录
+files: 保存结果
+fileType: 指定的文件格式，如 .jpg
+*/
+void getAllFiles(string path, vector<string>& files, string fileType)
+{
+	// 文件句柄
+	long long hFile = 0;
+	// 文件信息
+	struct _finddata_t fileinfo;
+
+	string p;
+
+	if ((hFile = _findfirst(p.assign(path).append("\\*" + fileType).c_str(), &fileinfo)) != -1) {
+		do {
+			// 保存文件的全路径
+			files.push_back(p.assign(path).append("\\").append(fileinfo.name));
+
+		} while (_findnext(hFile, &fileinfo) == 0); //寻找下一个，成功返回0，否则-1
+
+		_findclose(hFile);
+	}
+}
+
 void Sess::init()
 {
 	using namespace libtorrent;
@@ -514,6 +541,24 @@ void Sess::init()
 	settings.volatile_read_cache = false;
 	ses->set_settings(settings);				//应用配置
 
+	//重启恢复下载
+	add_torrent_params p;
+	p.save_path = save_path;
+	p.storage_mode = (storage_mode_t)allocation_mode;
+	std::vector<std::string> file_path;
+	std::vector<char> buf;
+	getAllFiles(combine_path(save_path, ".resume"), file_path, ".resume");
+	for each (auto path in file_path)
+	{
+		if (load_file(path, buf, ec) == 0)
+		{
+			int len = path.size();
+			p.url = "magnet:?xt=urn:btih:" + path.substr(len - 47, 40);
+			p.resume_data = &buf;
+			ses->async_add_torrent(p);
+			this->has_task = true;
+		}
+	}
 }
 
 AllTorrent& Sess::getItem()
