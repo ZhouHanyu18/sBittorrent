@@ -238,5 +238,23 @@
     <ClInclude Include="Temp\GeneratedFiles\ui_magnetdialog.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource1.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource2.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource3.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="sBittorrent.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="media\icons\sBittorrent.ico" />
   </ItemGroup>
 </Project>
