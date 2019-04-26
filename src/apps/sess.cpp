@@ -559,6 +559,7 @@ void Sess::init()
 			this->has_task = true;
 		}
 	}
+
 }
 
 AllTorrent& Sess::getItem()
@@ -732,6 +733,11 @@ void Sess::addMagnet(std::string str)
 
 Sess::~Sess()
 {
+	libtorrent::entry e;
+	std::vector<char> in;
+	ses->save_state(e);
+	libtorrent::bencode(std::back_inserter(in), e);
+	save_file(".ses_state", in);
 	printf("调用析构函数");
 }
 
@@ -921,6 +927,7 @@ void Sess::saveResume()
 		if (h->need_save_resume)
 		{
 			h->handle.save_resume_data();
+			++num_outstanding_resume_data;
 		}
 	}
 }

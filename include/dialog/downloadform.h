@@ -64,6 +64,7 @@ public:
 	void continueAllTask();
 	void deleteAllTask();
 	void saveResume();
+	bool quit(){ return pSess->quit(); };
 public slots:
 	void on_tableWidget_customContextMenuRequested(QPoint pos);		//ÓÒ¼üÏìÓ¦
 	void double_click(QTableWidgetItem *item);		//Ë«»÷ÊÂ¼ş

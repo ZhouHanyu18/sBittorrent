@@ -149,6 +149,7 @@ public:
 	void addTorrent(std::string str);
 	void addMagnet(std::string str);
 	bool has_task = false;
+	bool quit(){ if (num_outstanding_resume_data) return false; else return true; }
 public:
 	void continueDownload(std::vector<int> rows);
 	void stopDownload(std::vector<int> rows);
