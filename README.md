@@ -1,5 +1,7 @@
 # sBittorrent
 
+![Icon](media/icons/sBittorrent.png)
+
 * 傻瓜式种子下载及资源搜索
 * 基于libtorrent的简洁版BT下载工具
 * 支持如下功能：
@@ -17,4 +19,9 @@
 
 ![](https://github.com/ZhouHanyu18/sBittorrent/blob/dev/media/readme/download.png)
 
+# Build
 
+[参考链接](https://blog.csdn.net/z345436330/article/details/89068299)
+- OpenSSL 
+- boost 
+- libtorrent
