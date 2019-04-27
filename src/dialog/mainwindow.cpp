@@ -61,6 +61,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 {
 	on_save_triggered();
 	bThread = FALSE;
+	th.join();
 	th.~thread();
 	this->hide();
 	while (!pDownloadForm->quit());

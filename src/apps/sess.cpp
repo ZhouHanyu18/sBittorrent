@@ -542,7 +542,7 @@ void Sess::init()
 	ses->set_settings(settings);				//应用配置
 
 	//重启恢复下载
-	add_torrent_params p;
+	/*add_torrent_params p;
 	p.save_path = save_path;
 	p.storage_mode = (storage_mode_t)allocation_mode;
 	std::vector<std::string> file_path;
@@ -558,8 +558,22 @@ void Sess::init()
 			ses->async_add_torrent(p);
 			this->has_task = true;
 		}
+	}*/
+	std::vector<char> buf;
+	if (load_file(".tor", buf, ec) == 0)
+	{
+		std::string temp = "";
+		for (auto i = buf.begin(); i != buf.end(); ++i)
+		{
+			if (*i == '\n')
+			{
+				addTorrent(temp);
+				temp = "";
+				continue;
+			}
+			temp += *i;
+		}
 	}
-
 }
 
 AllTorrent& Sess::getItem()
@@ -738,6 +752,16 @@ Sess::~Sess()
 	ses->save_state(e);
 	libtorrent::bencode(std::back_inserter(in), e);
 	save_file(".ses_state", in);
+
+	std::vector<char> t_file;
+	std::string temp;
+	for each (auto file in files)
+	{
+		temp += file.first;
+		temp += '\n';
+	}
+	t_file.assign(temp.begin(),temp.end());
+	save_file(".tor", t_file);
 	printf("调用析构函数");
 }
 
