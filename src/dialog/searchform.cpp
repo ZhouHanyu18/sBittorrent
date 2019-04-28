@@ -2,6 +2,7 @@
 #include "dialog/mainwindow.h"
 #include "ui_searchform.h"
 #include <math.h>
+#include <Thread>
 
 SearchForm::SearchForm(QWidget *parent) :
     QWidget(parent),
@@ -160,29 +161,24 @@ QStringList SearchForm::search(QString regularexp, QString data){
 	return searchdata;
 }
 
-void SearchForm::on_SearchButton_clicked()
+void SearchForm::TheadDownload(int n)
 {
-	list.clear();
-	Http *html = new Http(this);
-	QUrl url = QUrl(QString("https://zooqle.com/search"));
-	QUrlQuery query;
-	query.addQueryItem("q", ui->lineEdit->text());
-	query.addQueryItem("pg", QString::fromLocal8Bit("1"));
-	url.setQuery(query);
-	html->Get(url, QString(".resume/search"));
-	QFile file(".resume/search");
+}
 
+int SearchForm::regZooqle()
+{
+	QFile file(".resume/search");
 	if (!file.open(QIODevice::ReadWrite | QIODevice::Text)) {
-		//qDebug()<<"Can't open the file!"<<endl;
-		return;
+		qDebug() << "Can't open the file!" << endl;
+		return 0;
 	}
 	QTextStream stream(&file);
 	stream.setCodec("utf-8");
 	QString data = stream.readAll();
 	file.close();
-
-	QStringList source = search("(small\" href=\"/).*?(magnet:[?]xt=urn:btih:).*?(?=</div></div></td></tr>)", data);
 	QStringList page_num = search("(?<=>)[0-9]+(?=</a></li><li><a[^>]*aria-label=\"Next\")", data);
+	QStringList source = search("(small\" href=\"/).*?(magnet:[?]xt=urn:btih:).*?(?=</div></div></td></tr>)", data);
+
 	for (int i = 0; i < source.size(); ++i)
 	{
 		item temp;
@@ -195,14 +191,37 @@ void SearchForm::on_SearchButton_clicked()
 		list.append(temp);
 	}
 	setList();
-	/*if (page_num.size() > 0)
-	{
-		query.removeQueryItem("pg");
-		query.addQueryItem("pg", QString::number(i));
-		url.setQuery(query);
-		html->Get(url, QString("result_%1.html").arg(i));
-	}*/
+	if (page_num.size() > 0)
+		return page_num[0].toInt();
+	else
+		return 0;
+}
 
+void SearchForm::on_SearchButton_clicked()
+{
+	list.clear();
+	html = new Http(this);
+
+	QUrl url = QUrl(QString("https://zooqle.com/search"));
+	QUrlQuery query;
+	query.addQueryItem("q", ui->lineEdit->text());
+	query.addQueryItem("pg", QString::fromLocal8Bit("1"));
+	url.setQuery(query);
+	html->Get(url, QString(".resume/search"));
+
+	int nPage = regZooqle();
+
+	if (nPage > 1)
+	{
+		for (int i = 1; i < nPage; ++i)
+		{
+			query.removeQueryItem("pg");
+			query.addQueryItem("pg", QString::number(i+1));
+			url.setQuery(query);
+			html->Get(url, QString(".resume/search"));
+			regZooqle();
+		}
+	}
 }
 
 void SearchForm::on_lineEdit_returnPressed()

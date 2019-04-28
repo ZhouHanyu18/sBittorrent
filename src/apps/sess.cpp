@@ -761,6 +761,7 @@ Sess::~Sess()
 		temp += '\n';
 	}
 	t_file.assign(temp.begin(),temp.end());
+	libtorrent::remove(".tor", ec);
 	save_file(".tor", t_file);
 	printf("调用析构函数");
 }

@@ -41,6 +41,10 @@ private:
 	QMenu *pMenu;
 	QAction *downloadAction;
 	QAction *copyAction;
+	void TheadDownload(int n);
+	bool bDownload;
+	Http *html;
+	int regZooqle();
 public:
 	void init();
 	void setList();
