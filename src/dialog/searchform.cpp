@@ -197,6 +197,39 @@ int SearchForm::regZooqle()
 		return 0;
 }
 
+int SearchForm::regBtAnt()
+{
+	QFile file(".resume/search");
+	if (!file.open(QIODevice::ReadWrite | QIODevice::Text)) {
+		qDebug() << "Can't open the file!" << endl;
+		return 0;
+	}
+	QTextStream stream(&file);
+	stream.setCodec("utf-8");
+	QString data = stream.readAll().replace('\n', "");;
+	file.close();
+
+	QStringList page_num = search("(?<=-first-asc-)[0-9]+(?=\">)", data);
+	QStringList mLists = search("(item-list).*?(magnet:[?]xt=urn:btih:).*?(?=class)", data);
+	for (int i = 0; i < mLists.size(); ++i)
+	{
+		item temp;
+		QStringList name = search("(?<=<p>).*?(?=<span>[0-9., ]+)", mLists[i]);
+		temp.name = name[0].replace(QRegularExpression("<.*?>"), "");
+		temp.size = search("(?<=<span>)[0-9., ]+(?i)(b|kb|mb|gb|tb|pb)(?=</span>)", mLists[i]).at(0);
+		temp.time = search("(?<=blue-pill\">).*?(?=</b>)", mLists[i]).at(1);
+		temp.Seeders = search("(?<=yellow-pill\">)[0-9]+", mLists[i]).at(0);
+		temp.Leechers = temp.Seeders;
+		temp.magnet = search("(magnet:[?]xt=urn:btih:).*?(?=\")", mLists[i]).at(0);
+		list.append(temp);
+	}
+	setList();
+	if (page_num.size() > 0)
+		return page_num.back().toInt();
+	else
+		return 0;
+}
+
 void SearchForm::on_SearchButton_clicked()
 {
 	list.clear();
@@ -220,6 +253,25 @@ void SearchForm::on_SearchButton_clicked()
 			url.setQuery(query);
 			html->Get(url, QString(".resume/search"));
 			regZooqle();
+		}
+	}
+	QString web = "http://www.btaot.com/search/";
+	QString text = ui->lineEdit->text();
+	QString page = "-first-asc-";
+
+	url = QUrl(web + text + page + "1");
+	qDebug() << url;
+	html->Get(url, QString(".resume/search"));
+	nPage = regBtAnt();
+
+	if (nPage > 1)
+	{
+		for (int i = 1; i < nPage; ++i)
+		{
+			QUrl url = QUrl(web + text + page + QString::number(i + 1));
+			qDebug() << url;
+			html->Get(url, QString(".resume/search"));
+			regBtAnt();
 		}
 	}
 }

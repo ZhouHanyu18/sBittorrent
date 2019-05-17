@@ -44,7 +44,9 @@ private:
 	void TheadDownload(int n);
 	bool bDownload;
 	Http *html;
+	//ÕıÔò»¯Æ¥ÅäÍøÒ³
 	int regZooqle();
+	int regBtAnt();
 public:
 	void init();
 	void setList();

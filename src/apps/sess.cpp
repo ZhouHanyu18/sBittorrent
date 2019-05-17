@@ -179,7 +179,8 @@ bool show_torrent(libtorrent::torrent_status const& st, int torrent_filter, int*
 int save_file(std::string const& filename, std::vector<char>& v)
 {
 	using namespace libtorrent;
-
+	if (v.size() == 0)
+		return -1;
 	file f;
 	libtorrent::error_code ec;
 	if (!f.open(filename, file::write_only, ec)) return -1;
