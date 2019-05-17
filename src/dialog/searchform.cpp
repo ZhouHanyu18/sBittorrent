@@ -158,6 +158,8 @@ QStringList SearchForm::search(QString regularexp, QString data){
 		}
 	} while (index < data.length());
 	//qDebug()<<searchdata;
+	if (searchdata.size() == 0)
+		searchdata.append(0);
 	return searchdata;
 }
 
