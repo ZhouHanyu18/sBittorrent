@@ -535,7 +535,7 @@ void Sess::init()
 #endif
 	
 
-	settings.user_agent = "sBittorrent/" LIBTORRENT_VERSION;
+	settings.user_agent = "libtorrent/" LIBTORRENT_VERSION;
 	settings.choking_algorithm = session_settings::auto_expand_choker;
 	settings.disk_cache_algorithm = session_settings::avoid_readback;
 	settings.active_downloads = 10;

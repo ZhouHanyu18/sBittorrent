@@ -113,7 +113,7 @@ void MainWindow::on_addMagnet_triggered()
 	{
 		pDownloadForm->addMagnet(cStr);
 	}
-	else
+	else if (qStr.size() > 0)
 	{
 		QMessageBox::information(this, "Error", QString::fromLocal8Bit("请输入正确链接"));
 	}

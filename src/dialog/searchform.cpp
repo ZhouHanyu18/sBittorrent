@@ -213,7 +213,7 @@ int SearchForm::regBtAnt()
 
 	QStringList page_num = search("(?<=-first-asc-)[0-9]+(?=\">)", data);
 	QStringList mLists = search("(item-list).*?(magnet:[?]xt=urn:btih:).*?(?=class)", data);
-	for (int i = 0; i < mLists.size(); ++i)
+	for (int i = 0; i < mLists.size()-1; ++i)
 	{
 		item temp;
 		QStringList name = search("(?<=<p>).*?(?=<span>[0-9., ]+)", mLists[i]);
