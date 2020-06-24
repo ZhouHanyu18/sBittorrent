@@ -1,6 +1,6 @@
 # sBittorrent
 
-![Icon](media/icons/sBittorrent.png)
+![](media/icons/sBittorrent.png)
 
 * 傻瓜式种子下载及资源搜索
 * 基于libtorrent的简洁版BT下载工具
